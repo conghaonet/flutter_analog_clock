@@ -67,21 +67,6 @@ Widget buildClock2() {
 }
 
 Widget buildClock3() {
-  return AnalogClock(
-    hourNumbers: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
-    dialPlateColor: Colors.yellow,
-    hourHandColor: Colors.red,
-    minuteHandColor: Colors.green,
-    tickColor: Colors.green,
-    numberColor: Colors.blue,
-    centerPointColor: Colors.white,
-    borderWidth: 0,
-    showSecondHand: false,
-    showTicks: false,
-  );
-}
-
-Widget buildClock4() {
   DateTime dateTime = DateTime.now();
   dateTime = dateTime.add(Duration(hours: -8));
   return AnalogClock(
@@ -103,6 +88,21 @@ Widget buildClock4() {
     tickColor: Colors.white,
     centerPointColor: Colors.yellow,
     showNumber: false,
+  );
+}
+
+Widget buildClock4() {
+  return AnalogClock(
+    hourNumbers: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
+    dialPlateColor: Colors.yellow,
+    hourHandColor: Colors.red,
+    minuteHandColor: Colors.green,
+    tickColor: Colors.green,
+    numberColor: Colors.blue,
+    centerPointColor: Colors.white,
+    borderWidth: 0,
+    showSecondHand: false,
+    showTicks: false,
   );
 }
 

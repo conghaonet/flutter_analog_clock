@@ -3,6 +3,7 @@
 A analog clock widget
 
 ## Getting Started
+<img src="https://i.ibb.co/C54DXLw/analog-clock.gif" alt="analog-clock" border="0">
 
 This project is a starting point for a Dart
 [package](https://flutter.dev/developing-packages/),
