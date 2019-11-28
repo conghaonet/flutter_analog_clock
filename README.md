@@ -1,15 +1,56 @@
-# analog_clock
+# Flutter Analog Clock
 
-A analog clock widget
+A simple and fully customizable analog clock widget.
 
-## Getting Started
 <img src="https://i.ibb.co/C54DXLw/analog-clock.gif" alt="analog-clock" border="0">
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+## Usage
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+### 1. Simple to use
+```dart
+import 'package:analog_clock/analog_clock.dart';
+import 'package:flutter/widgets.dart';
+
+class ClockDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AnalogClock();
+  }
+}
+```
+
+### 2. Customize to use
+```dart
+import 'package:analog_clock/analog_clock.dart';
+import 'package:flutter/material.dart';
+
+class ClockDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AnalogClock(
+      dateTime: DateTime.now(),
+      dialPlateColor: Colors.white,
+      hourHandColor: Colors.black,
+      minuteHandColor: Colors.black,
+      secondHandColor: Colors.black,
+      numberColor: Colors.black,
+      borderColor: Colors.black,
+      tickColor: Colors.black,
+      centerPointColor: Colors.black,
+      showBorder: true,
+      showTicks: true,
+      showMinuteHand: true,
+      showSecondHand: true,
+      showNumber: true,
+      borderWidth: 8.0,
+      hourNumberScale: .10,
+      hourNumbers: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
+      isLive: true,
+      width: 200.0,
+      height: 200.0,
+      decoration: const BoxDecoration(),
+      child: Text('Clock'),
+    );
+  }
+}
+```
