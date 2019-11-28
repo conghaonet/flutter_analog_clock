@@ -1,6 +1,6 @@
 name: analog_clock
-description: A analog clock widget
-version: 0.0.1
+description: A simple and fully customizable analog clock widget.
+version: 1.0.0
 author: conghaonet <conghaonet@gmail.com>
 homepage: https://github.com/conghaonet/analog_clock
 
