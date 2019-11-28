@@ -3,19 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class Clock extends StatefulWidget {
-  @override
-  _ClockState createState() => _ClockState();
-}
-
-class _ClockState extends State<Clock> {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return null;
-  }
-}
-
 class AnalogClockPainter extends CustomPainter {
   static const List<String> defaultHourNumbers = ['1','2','3','4','5','6','7','8','9','10','11','12'];
   final DateTime _datetime;
@@ -27,12 +14,13 @@ class AnalogClockPainter extends CustomPainter {
   final Color borderColor;
   final Color tickColor;
   final Color centerPointColor;
-  final List<String> hourNumbers;
   final bool showBorder;
   final bool showTicks;
   final bool showMinuteHand;
   final bool showSecondHand;
   final bool showNumber;
+  final double hourNumberScale;
+  final List<String> hourNumbers;
   double _borderWidth;
   final TextPainter _hourTextPainter = TextPainter(
     textAlign: TextAlign.center,
@@ -44,15 +32,16 @@ class AnalogClockPainter extends CustomPainter {
         this.hourHandColor = Colors.black,
         this.minuteHandColor = Colors.black,
         this.secondHandColor = Colors.black,
-        this.tickColor = Colors.black,
         this.numberColor = Colors.black,
         this.borderColor = Colors.black,
+        this.tickColor = Colors.black,
         this.centerPointColor = Colors.black,
         this.showBorder = true,
         this.showTicks = true,
         this.showMinuteHand = true,
         this.showSecondHand = true,
         this.showNumber = true,
+        this.hourNumberScale = 1.0,
         this.hourNumbers = defaultHourNumbers,
         double borderWidth,
       }) : assert(hourNumbers == null || hourNumbers.length==12),
@@ -88,7 +77,7 @@ class AnalogClockPainter extends CustomPainter {
 
     // setup numbers
     final double numberRadius = tickRadius - bigTickWidth * 3;
-    double hourTextHeight = (radius - borderWidth) / 40 * 8;
+    double hourTextHeight = (radius - borderWidth) / 40 * 8 * hourNumberScale;
 
     if(showNumber) {
       hourTextHeight = _paintHourText(canvas, numberRadius, hourTextHeight);

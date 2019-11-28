@@ -19,13 +19,14 @@ class AnalogClock extends StatefulWidget {
   final Color borderColor;
   final Color tickColor;
   final Color centerPointColor;
-  final List<String> hourNumbers;
   final bool showBorder;
   final bool showTicks;
   final bool showMinuteHand;
   final bool showSecondHand;
   final bool showNumber;
   final double borderWidth;
+  final double hourNumberScale;
+  final List<String> hourNumbers;
   final bool isLive;
   final double width;
   final double height;
@@ -34,7 +35,7 @@ class AnalogClock extends StatefulWidget {
 
   const AnalogClock({
     this.dateTime,
-    this.dialPlateColor = Colors.transparent,
+    this.dialPlateColor = Colors.white,
     this.hourHandColor = Colors.black,
     this.minuteHandColor = Colors.black,
     this.secondHandColor = Colors.black,
@@ -42,13 +43,39 @@ class AnalogClock extends StatefulWidget {
     this.borderColor = Colors.black,
     this.tickColor = Colors.black,
     this.centerPointColor = Colors.black,
-    this.hourNumbers = AnalogClockPainter.defaultHourNumbers,
     this.showBorder = true,
     this.showTicks = true,
     this.showMinuteHand = true,
     this.showSecondHand = true,
     this.showNumber = true,
     this.borderWidth,
+    this.hourNumberScale = 1.0,
+    this.hourNumbers = AnalogClockPainter.defaultHourNumbers,
+    this.isLive = true,
+    this.width = double.infinity,
+    this.height = double.infinity,
+    this.decoration = const BoxDecoration(),
+    this.child,
+    Key key
+  }): super(key: key);
+  const AnalogClock.dark({
+    this.dateTime,
+    this.dialPlateColor = Colors.black,
+    this.hourHandColor = Colors.grey,
+    this.minuteHandColor = Colors.grey,
+    this.secondHandColor = Colors.grey,
+    this.numberColor = Colors.grey,
+    this.borderColor = Colors.black,
+    this.tickColor = Colors.grey,
+    this.centerPointColor = Colors.grey,
+    this.showBorder = true,
+    this.showTicks = true,
+    this.showMinuteHand = true,
+    this.showSecondHand = true,
+    this.showNumber = true,
+    this.borderWidth,
+    this.hourNumberScale = 1.0,
+    this.hourNumbers = AnalogClockPainter.defaultHourNumbers,
     this.isLive = true,
     this.width = double.infinity,
     this.height = double.infinity,
@@ -88,20 +115,21 @@ class _AnalogClockState extends State<AnalogClock> {
         child: widget.child,
         painter: AnalogClockPainter(_dateTime ?? DateTime.now(),
           dialPlateColor: widget.dialPlateColor,
-          borderColor: widget.borderColor,
           hourHandColor: widget.hourHandColor,
           minuteHandColor: widget.minuteHandColor,
           secondHandColor: widget.secondHandColor,
-          tickColor: widget.tickColor,
           numberColor: widget.numberColor,
+          borderColor: widget.borderColor,
+          tickColor: widget.tickColor,
           centerPointColor: widget.centerPointColor,
           showBorder: widget.showBorder,
           showTicks: widget.showTicks,
           showMinuteHand: widget.showMinuteHand,
           showSecondHand: widget.showSecondHand,
           showNumber: widget.showNumber,
-          hourNumbers: widget.hourNumbers,
           borderWidth: widget.borderWidth,
+          hourNumberScale: widget.hourNumberScale,
+          hourNumbers: widget.hourNumbers,
         ),
       ),
     );
