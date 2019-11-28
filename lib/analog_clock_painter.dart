@@ -186,7 +186,8 @@ class AnalogClockPainter extends CustomPainter {
         || showSecondHand != oldDelegate.showSecondHand
         || showNumber != oldDelegate.showNumber
         || hourNumbers != oldDelegate.hourNumbers
-        || _borderWidth != oldDelegate._borderWidth;
+        || _borderWidth != oldDelegate._borderWidth
+        || hourNumberScale != oldDelegate.hourNumberScale;
   }
 
   static double getRadians(double angle) {

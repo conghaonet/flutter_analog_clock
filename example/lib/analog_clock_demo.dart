@@ -1,4 +1,3 @@
-
 import 'package:analog_clock/analog_clock.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +41,6 @@ class AnalogClockDemo extends StatelessWidget {
       ),
     );
   }
-
 }
 
 Widget buildClock1() {
