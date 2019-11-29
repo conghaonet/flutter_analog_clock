@@ -1,4 +1,4 @@
-package com.example.example
+package com.app2m.analogclock.example
 
 import android.os.Bundle
 

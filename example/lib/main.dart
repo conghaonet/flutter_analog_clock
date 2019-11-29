@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'flutter_analog_clock_demo.dart';
+import 'analog_clock_example.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
