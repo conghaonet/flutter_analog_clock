@@ -1,5 +1,7 @@
 # Flutter Analog Clock
 
+[![pub package](https://img.shields.io/pub/v/flutter_analog_clock.svg)](https://pub.dev/packages/flutter_analog_clock)
+
 A simple and fully customizable flutter analog clock widget.
 
 <img src="https://i.ibb.co/C54DXLw/analog-clock.gif" alt="analog-clock" border="0">
