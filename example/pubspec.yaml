@@ -19,8 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  analog_clock:
-    path: ../../analog_clock
+  flutter_analog_clock:
+    path: ../../flutter_analog_clock
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

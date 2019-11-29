@@ -8,26 +8,26 @@ A simple and fully customizable analog clock widget.
 
 ### 1. Simple to use
 ```dart
-import 'package:analog_clock/analog_clock.dart';
+import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:flutter/widgets.dart';
 
 class ClockDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AnalogClock();
+    return FlutterAnalogClock();
   }
 }
 ```
 
 ### 2. Customize to use
 ```dart
-import 'package:analog_clock/analog_clock.dart';
+import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:flutter/material.dart';
 
 class ClockDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AnalogClock(
+    return FlutterAnalogClock(
       dateTime: DateTime.now(),
       dialPlateColor: Colors.white,
       hourHandColor: Colors.black,

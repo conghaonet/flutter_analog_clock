@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class AnalogClockPainter extends CustomPainter {
+class FlutterAnalogClockPainter extends CustomPainter {
   static const List<String> defaultHourNumbers = ['1','2','3','4','5','6','7','8','9','10','11','12'];
   final DateTime _datetime;
   final Color dialPlateColor;
@@ -27,7 +27,7 @@ class AnalogClockPainter extends CustomPainter {
     textDirection: TextDirection.ltr,
   );
 
-  AnalogClockPainter(this._datetime,
+  FlutterAnalogClockPainter(this._datetime,
       {this.dialPlateColor = Colors.transparent,
         this.hourHandColor = Colors.black,
         this.minuteHandColor = Colors.black,
@@ -170,7 +170,7 @@ class AnalogClockPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(AnalogClockPainter oldDelegate) {
+  bool shouldRepaint(FlutterAnalogClockPainter oldDelegate) {
     return _datetime != oldDelegate._datetime
         || dialPlateColor != oldDelegate.dialPlateColor
         || hourHandColor != oldDelegate.hourHandColor
