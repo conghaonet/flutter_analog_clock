@@ -1,6 +1,6 @@
 name: flutter_analog_clock
 description: A simple and fully customizable flutter analog clock widget.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/conghaonet/flutter_analog_clock
 
 environment:
