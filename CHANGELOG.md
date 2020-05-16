@@ -9,3 +9,8 @@
 ## [0.1.0] - 2019-11-29
 
 * Update description field of pubspec.yaml.
+
+## [0.1.1] - 2020-05-16
+
+* bug fixes.
+
