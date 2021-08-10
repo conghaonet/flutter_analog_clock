@@ -34,7 +34,7 @@ class FlutterAnalogClockPainter extends CustomPainter {
   final bool showNumber;
   final double hourNumberScale;
   final List<String> hourNumbers;
-  double _borderWidth;
+  double? _borderWidth;
   final TextPainter _hourTextPainter = TextPainter(
     textAlign: TextAlign.center,
     textDirection: TextDirection.ltr,
@@ -57,7 +57,7 @@ class FlutterAnalogClockPainter extends CustomPainter {
     this.showNumber = true,
     this.hourNumberScale = 1.0,
     this.hourNumbers = defaultHourNumbers,
-    double borderWidth,
+    double? borderWidth,
   })  : assert(hourNumbers == null || hourNumbers.length == 12),
         _borderWidth = borderWidth;
 

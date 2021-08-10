@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 
 /// A analog clock.
 class FlutterAnalogClock extends StatefulWidget {
-  final DateTime dateTime;
+  final DateTime? dateTime;
   final Color dialPlateColor;
   final Color hourHandColor;
   final Color minuteHandColor;
@@ -23,14 +23,14 @@ class FlutterAnalogClock extends StatefulWidget {
   final bool showMinuteHand;
   final bool showSecondHand;
   final bool showNumber;
-  final double borderWidth;
+  final double? borderWidth;
   final double hourNumberScale;
   final List<String> hourNumbers;
   final bool isLive;
   final double width;
   final double height;
   final BoxDecoration decoration;
-  final Widget child;
+  final Widget? child;
 
   const FlutterAnalogClock(
       {this.dateTime,
@@ -55,7 +55,7 @@ class FlutterAnalogClock extends StatefulWidget {
       this.height = double.infinity,
       this.decoration = const BoxDecoration(),
       this.child,
-      Key key})
+      Key? key})
       : super(key: key);
   const FlutterAnalogClock.dark(
       {this.dateTime,
@@ -80,7 +80,7 @@ class FlutterAnalogClock extends StatefulWidget {
       this.height = double.infinity,
       this.decoration = const BoxDecoration(),
       this.child,
-      Key key})
+      Key? key})
       : super(key: key);
 
   @override
@@ -89,8 +89,8 @@ class FlutterAnalogClock extends StatefulWidget {
 }
 
 class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
-  Timer _timer;
-  DateTime _dateTime;
+  Timer? _timer;
+  DateTime? _dateTime;
   _FlutterAnalogClockState(this._dateTime);
 
   @override

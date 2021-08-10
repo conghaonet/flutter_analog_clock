@@ -81,8 +81,8 @@ Widget buildClock3() {
     dialPlateColor: Colors.green,
     hourHandColor: Colors.red,
     minuteHandColor: Colors.purple,
-    secondHandColor: Colors.blue[200],
-    borderColor: Colors.green[700],
+    secondHandColor: Colors.blue[200]!,
+    borderColor: Colors.green[700]!,
     tickColor: Colors.white,
     centerPointColor: Colors.yellow,
     showNumber: false,
@@ -125,8 +125,8 @@ Widget buildClock6() {
     minuteHandColor: Colors.white,
     secondHandColor: Colors.white,
     centerPointColor: Colors.white,
-    borderColor: Colors.red[700],
+    borderColor: Colors.red[700]!,
     borderWidth: 24,
-    tickColor: Colors.blue[900],
+    tickColor: Colors.blue[900]!,
   );
 }
