@@ -14,3 +14,6 @@
 
 * bug fixes.
 
+## [0.2.1] - 2022-12-17
+* Support null safety.
+* Support Windows/macOS/Linux/Web
