@@ -8,8 +8,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: FlutterAnalogClockDemo(),
+    return MaterialApp(
+      theme: ThemeData(
+        /// 使用 Material3 样式
+        useMaterial3: true,
+      ),
+      home: const FlutterAnalogClockDemo(),
+
     );
   }
 }
