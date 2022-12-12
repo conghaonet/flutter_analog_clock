@@ -2,19 +2,19 @@ library flutter_analog_clock;
 
 import 'dart:async';
 
-import 'package:flutter_analog_clock/flutter_analog_clock_painter.dart';
+import 'package:flutter_analog_clock/dial_painter.dart';
 import 'package:flutter/material.dart';
 
 /// A analog clock.
 class FlutterAnalogClock extends StatefulWidget {
   final DateTime? dateTime;
-  final Color dialPlateColor;
+  final Color dialColor;
   final Color hourHandColor;
   final Color minuteHandColor;
   final Color secondHandColor;
   final Color numberColor;
   final Color borderColor;
-  final Color tickColor;
+  final Color markingColor;
   final Color centerPointColor;
   final bool showBorder;
   final bool showTicks;
@@ -25,21 +25,18 @@ class FlutterAnalogClock extends StatefulWidget {
   final double hourNumberScale;
   final List<String> hourNumbers;
   final bool isLive;
-  final double width;
-  final double height;
-  final BoxDecoration decoration;
   final Widget? child;
 
   const FlutterAnalogClock({
     super.key,
     this.dateTime,
-    this.dialPlateColor = Colors.white,
+    this.dialColor = Colors.white,
     this.hourHandColor = Colors.black,
     this.minuteHandColor = Colors.black,
     this.secondHandColor = Colors.black,
     this.numberColor = Colors.black,
     this.borderColor = Colors.black,
-    this.tickColor = Colors.black,
+    this.markingColor = Colors.black,
     this.centerPointColor = Colors.black,
     this.showBorder = true,
     this.showTicks = true,
@@ -48,23 +45,20 @@ class FlutterAnalogClock extends StatefulWidget {
     this.showNumber = true,
     this.borderWidth,
     this.hourNumberScale = 1.0,
-    this.hourNumbers = FlutterAnalogClockPainter.defaultHourNumbers,
+    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     this.isLive = true,
-    this.width = double.infinity,
-    this.height = double.infinity,
-    this.decoration = const BoxDecoration(),
     this.child,
   });
   const FlutterAnalogClock.dark({
     super.key,
     this.dateTime,
-    this.dialPlateColor = Colors.black,
+    this.dialColor = Colors.black,
     this.hourHandColor = Colors.grey,
     this.minuteHandColor = Colors.grey,
     this.secondHandColor = Colors.grey,
     this.numberColor = Colors.grey,
     this.borderColor = Colors.black,
-    this.tickColor = Colors.grey,
+    this.markingColor = Colors.grey,
     this.centerPointColor = Colors.grey,
     this.showBorder = true,
     this.showTicks = true,
@@ -73,11 +67,8 @@ class FlutterAnalogClock extends StatefulWidget {
     this.showNumber = true,
     this.borderWidth,
     this.hourNumberScale = 1.0,
-    this.hourNumbers = FlutterAnalogClockPainter.defaultHourNumbers,
+    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     this.isLive = true,
-    this.width = double.infinity,
-    this.height = double.infinity,
-    this.decoration = const BoxDecoration(),
     this.child,
   });
 
@@ -109,21 +100,29 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.width,
-      height: widget.height,
-      decoration: widget.decoration,
+    return AspectRatio(
+      aspectRatio: 1,
       child: CustomPaint(
         child: widget.child,
-        painter: FlutterAnalogClockPainter(
+        painter: DialPainter(
+          dialColor: widget.dialColor,
+          borderColor: widget.borderColor,
+          borderWidth: widget.borderWidth,
+          borderWidthFactor: null,
+          markingColor: widget.markingColor,
+          markingRadiusScale: 0.95,
+          markingWidthScale: 1.0,
+          numberColor: widget.numberColor,
+        ),
+        /*painter: FlutterAnalogClockPainter(
           _dateTime ?? DateTime.now(),
-          dialPlateColor: widget.dialPlateColor,
+          dialColor: widget.dialColor,
           hourHandColor: widget.hourHandColor,
           minuteHandColor: widget.minuteHandColor,
           secondHandColor: widget.secondHandColor,
           numberColor: widget.numberColor,
           borderColor: widget.borderColor,
-          tickColor: widget.tickColor,
+          markingColor: widget.markingColor,
           centerPointColor: widget.centerPointColor,
           showBorder: widget.showBorder,
           showTicks: widget.showTicks,
@@ -133,7 +132,7 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
           borderWidth: widget.borderWidth,
           hourNumberScale: widget.hourNumberScale,
           hourNumbers: widget.hourNumbers,
-        ),
+        ),*/
       ),
     );
   }

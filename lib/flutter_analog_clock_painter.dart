@@ -4,28 +4,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class FlutterAnalogClockPainter extends CustomPainter {
-  static const List<String> defaultHourNumbers = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12'
-  ];
   final DateTime _datetime;
-  final Color dialPlateColor;
+  final Color dialColor;
   final Color hourHandColor;
   final Color minuteHandColor;
   final Color secondHandColor;
   final Color numberColor;
   final Color borderColor;
-  final Color tickColor;
+  final Color markingColor;
   final Color centerPointColor;
   final bool showBorder;
   final bool showTicks;
@@ -42,13 +28,13 @@ class FlutterAnalogClockPainter extends CustomPainter {
 
   FlutterAnalogClockPainter(
     this._datetime, {
-    this.dialPlateColor = Colors.transparent,
+    this.dialColor = Colors.transparent,
     this.hourHandColor = Colors.black,
     this.minuteHandColor = Colors.black,
     this.secondHandColor = Colors.black,
     this.numberColor = Colors.black,
     this.borderColor = Colors.black,
-    this.tickColor = Colors.black,
+    this.markingColor = Colors.black,
     this.centerPointColor = Colors.black,
     this.showBorder = true,
     this.showTicks = true,
@@ -56,7 +42,7 @@ class FlutterAnalogClockPainter extends CustomPainter {
     this.showSecondHand = true,
     this.showNumber = true,
     this.hourNumberScale = 1.0,
-    this.hourNumbers = defaultHourNumbers,
+    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     double? borderWidth,
   })  : assert(hourNumbers.length == 12),
         _borderWidth = borderWidth;
@@ -65,19 +51,13 @@ class FlutterAnalogClockPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     //clock radius
     final radius = min(size.width, size.height) / 2;
+    final double borderWidth = showBorder ? (_borderWidth ?? radius / 20.0) : 0.0;
     //clock circumference
-    final double borderWidth =
-        showBorder ? (_borderWidth ?? radius / 20.0) : 0.0;
     final double circumference = 2 * (radius - borderWidth) * pi;
-
+    // translate to center
     canvas.translate(size.width / 2, size.height / 2);
 
-    canvas.drawCircle(
-        Offset(0, 0),
-        radius,
-        Paint()
-          ..style = PaintingStyle.fill
-          ..color = dialPlateColor);
+    canvas.drawCircle(Offset.zero, radius, Paint()..color = dialColor);
 
     // border style
     if (showBorder && borderWidth > 0) {
@@ -140,13 +120,13 @@ class FlutterAnalogClockPainter extends CustomPainter {
       }
     }
     Paint tickPaint = Paint()
-      ..color = this.tickColor
+      ..color = this.markingColor
       ..strokeWidth = tickWidth
       ..strokeCap = StrokeCap.round;
     canvas.drawPoints(PointMode.points, ticks, tickPaint);
 
     Paint bigTickPaint = Paint()
-      ..color = this.tickColor
+      ..color = this.markingColor
       ..strokeWidth = bigTickWidth
       ..strokeCap = StrokeCap.round;
     canvas.drawPoints(PointMode.points, bigTicks, bigTickPaint);
@@ -215,11 +195,11 @@ class FlutterAnalogClockPainter extends CustomPainter {
   @override
   bool shouldRepaint(FlutterAnalogClockPainter oldDelegate) {
     return _datetime != oldDelegate._datetime ||
-        dialPlateColor != oldDelegate.dialPlateColor ||
+        dialColor != oldDelegate.dialColor ||
         hourHandColor != oldDelegate.hourHandColor ||
         minuteHandColor != oldDelegate.minuteHandColor ||
         secondHandColor != oldDelegate.secondHandColor ||
-        tickColor != oldDelegate.tickColor ||
+        markingColor != oldDelegate.markingColor ||
         numberColor != oldDelegate.numberColor ||
         borderColor != oldDelegate.borderColor ||
         centerPointColor != oldDelegate.centerPointColor ||
