@@ -2,8 +2,11 @@ import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+import 'flutter_analog_clock.dart';
+
 
 class DialPainter extends CustomPainter {
+  final AnalogClockListener listener;
   final Color? dialColor;
   final Color? borderColor;
   final double? borderWidth;
@@ -14,7 +17,7 @@ class DialPainter extends CustomPainter {
   final List<String> hourNumbers;
   final Color? numberColor;
   const DialPainter({
-    super.repaint,
+    required this.listener,
     this.dialColor,
     this.borderColor,
     this.borderWidth,
@@ -24,7 +27,7 @@ class DialPainter extends CustomPainter {
     this.markingWidthScale = 1.0,
     this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     this.numberColor
-  });
+  }) : super(repaint: listener);
   @override
   void paint(Canvas canvas, Size size) {
     double clockRadius = math.min(size.width, size.height) / 2;
@@ -32,6 +35,7 @@ class DialPainter extends CustomPainter {
     if(borderWidthFactor != null) {
       confirmedBorderWidth = clockRadius * borderWidthFactor!;
     }
+    listener.dialRadius = clockRadius - confirmedBorderWidth;
     // translate to center of clock
     canvas.translate(size.width / 2, size.height / 2);
 
@@ -59,8 +63,9 @@ class DialPainter extends CustomPainter {
           ..strokeWidth = confirmedBorderWidth,
       );
     }
-    final innerRadius = _drawMarkings(canvas, clockRadius - confirmedBorderWidth);
-    _drawHourText(canvas, innerRadius * 0.85);
+    final hourTextRadius = _drawMarkings(canvas, clockRadius - confirmedBorderWidth) * 0.85;
+    _drawHourText(canvas, hourTextRadius);
+    listener.hourTextRadius = hourTextRadius;
   }
 
   double _drawMarkings(final Canvas canvas, final double radius) {
@@ -68,6 +73,7 @@ class DialPainter extends CustomPainter {
       return radius;
     }
     final double markingRadius = radius * markingRadiusScale;
+    listener.markingRadius = markingRadius;
     double smallMarkingWidth = (radius - markingRadius) / 1.5 * markingWidthScale;
     if(smallMarkingWidth/2 + markingRadius > radius) {
       smallMarkingWidth = (radius - markingRadius) * 2;
@@ -76,6 +82,8 @@ class DialPainter extends CustomPainter {
     if(bigMarkingWidth/2 + markingRadius > radius) {
       bigMarkingWidth = (radius - markingRadius) * 2;
     }
+    listener.bigMarkingWidth = bigMarkingWidth;
+
     final List<Offset> smallMarkings = [];
     final List<Offset> bigMarkings = [];
     for (var i = 0; i < 60; i++) {
@@ -134,6 +142,7 @@ class DialPainter extends CustomPainter {
       textPainter.paint(canvas, Offset(-textPainter.width/2, -textPainter.height/2));
       canvas.restore();
     }
+    listener.maxTextSize = maxTextSide;
     return maxTextSide;
   }
 

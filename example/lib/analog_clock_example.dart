@@ -13,8 +13,8 @@ class FlutterAnalogClockDemo extends StatelessWidget {
           child: const FlutterAnalogClock(
             dialColor: Colors.lightGreen,
             borderColor: Colors.black,
-            // numberColor: Colors.transparent,
-            borderWidth: 1.0,
+            hourHandColor: Colors.red,
+            borderWidth: 8.0,
           ),
         ),
       ),

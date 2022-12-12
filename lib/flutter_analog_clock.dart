@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter_analog_clock/dial_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_analog_clock/hands_painter.dart';
 
 /// A analog clock.
 class FlutterAnalogClock extends StatefulWidget {
@@ -80,6 +81,7 @@ class FlutterAnalogClock extends StatefulWidget {
 class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
   Timer? _timer;
   DateTime? _dateTime;
+  AnalogClockListener _listener = AnalogClockListener();
   _FlutterAnalogClockState(this._dateTime);
 
   @override
@@ -105,6 +107,7 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
       child: CustomPaint(
         child: widget.child,
         painter: DialPainter(
+          listener: _listener,
           dialColor: widget.dialColor,
           borderColor: widget.borderColor,
           borderWidth: widget.borderWidth,
@@ -113,6 +116,15 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
           markingRadiusScale: 0.95,
           markingWidthScale: 1.0,
           numberColor: widget.numberColor,
+        ),
+        foregroundPainter: HandPainter(
+          listener: _listener,
+          dateTime: _dateTime ?? DateTime.now(),
+          borderWidth: widget.borderWidth,
+          borderWidthFactor: null,
+          hourHandColor: widget.hourHandColor,
+          minuteHandColor: widget.minuteHandColor,
+          secondHandColor: widget.secondHandColor,
         ),
         /*painter: FlutterAnalogClockPainter(
           _dateTime ?? DateTime.now(),
@@ -142,4 +154,21 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
     _timer?.cancel();
     super.dispose();
   }
+}
+
+class AnalogClockListener extends Listenable {
+  double dialRadius = 0.0;
+  double markingRadius = 0.0;
+  double bigMarkingWidth = 0.0;
+  double maxTextSize = 0.0;
+  double hourTextRadius = 0.0;
+
+  @override
+  void addListener(VoidCallback listener) {
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+  }
+
 }
