@@ -31,23 +31,25 @@ class HandPainter extends CustomPainter {
     // translate to center of clock
     canvas.translate(size.width / 2, size.height / 2);
 
-    double hourHandRadius = listener.hourTextRadius - listener.maxTextSize/2;
+    _drawHourHand(canvas, listener.hourTextRadius - listener.maxTextSize/2, listener.dialRadius * 0.06);
+    _drawMinuteHand(canvas, listener.hourTextRadius, listener.dialRadius * 0.03);
+    _drawSecondHand(canvas, listener.markingRadius, listener.dialRadius * 0.015);
+  }
+
+  void _drawHourHand(Canvas canvas, double radius, double strokeWidth) {
     double angle = dateTime.hour % 12 + dateTime.minute / 60.0 - 3;
     Offset handOffset = Offset(
-        math.cos(getRadians(angle * 30)) * hourHandRadius,
-        math.sin(getRadians(angle * 30)) * hourHandRadius
+        math.cos(getRadians(angle * 30)) * radius,
+        math.sin(getRadians(angle * 30)) * radius
     );
     final hourHandPaint = Paint()
       ..color = this.hourHandColor ?? Colors.transparent
-      ..strokeWidth = 8;
+      ..strokeWidth = strokeWidth;
     canvas.drawLine(Offset(0, 0), handOffset, hourHandPaint);
-
-    _paintMinuteHand(canvas, listener.hourTextRadius, 4);
-    _paintSecondHand(canvas, listener.markingRadius, 2);
   }
 
   /// draw minute hand
-  void _paintMinuteHand(Canvas canvas, double radius, double strokeWidth) {
+  void _drawMinuteHand(Canvas canvas, double radius, double strokeWidth) {
     double angle = dateTime.minute - 15.0;
     Offset handOffset = Offset(
         math.cos(getRadians(angle * 6.0)) * radius,
@@ -60,7 +62,7 @@ class HandPainter extends CustomPainter {
   }
 
   /// draw second hand
-  void _paintSecondHand(Canvas canvas, double radius, double strokeWidth) {
+  void _drawSecondHand(Canvas canvas, double radius, double strokeWidth) {
     double angle = dateTime.second - 15.0;
     Offset handOffset = Offset(
         math.cos(getRadians(angle * 6.0)) * radius,
