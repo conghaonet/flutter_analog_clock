@@ -22,7 +22,7 @@ class DialPainter extends CustomPainter {
     this.markingColor,
     this.markingRadiusScale = 0.95,
     this.markingWidthScale = 1.0,
-    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'A'],
+    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     this.numberColor
   });
   @override
@@ -143,7 +143,7 @@ class DialPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant DialPainter oldDelegate) {
-    return true;
+    return false;
   }
 
 }
