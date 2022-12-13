@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -9,24 +11,28 @@ class HandPainter extends CustomPainter {
   final Color? hourHandColor;
   final Color? minuteHandColor;
   final Color? secondHandColor;
+  final Color? centerPointColor;
   final double hourHandWidthFactor;
   final double minuteHandWidthFactor;
   final double secondHandWidthFactor;
   final double hourHandLengthFactor;
   final double minuteHandLengthFactor;
   final double secondHandLengthFactor;
+  final double centerPointWidthFactor;
   const HandPainter({
     required this.listener,
     required this.dateTime,
     this.hourHandColor,
     this.minuteHandColor,
     this.secondHandColor,
+    this.centerPointColor,
     required this.hourHandWidthFactor,
     required this.minuteHandWidthFactor,
     required this.secondHandWidthFactor,
     required this.hourHandLengthFactor,
     required this.minuteHandLengthFactor,
     required this.secondHandLengthFactor,
+    required this.centerPointWidthFactor,
   }) : super(repaint: listener);
 
   @override
@@ -66,6 +72,16 @@ class HandPainter extends CustomPainter {
         listener.dialRadius * 0.01 * secondHandWidthFactor,
       );
     }
+
+    //draw center point
+    if(centerPointColor != null && centerPointColor != Colors.transparent
+        && centerPointWidthFactor > 0.0) {
+      Paint centerPointPaint = Paint()
+        ..strokeWidth = listener.dialRadius * 0.08 * centerPointWidthFactor
+        ..strokeCap = StrokeCap.round
+        ..color = this.centerPointColor!;
+      canvas.drawPoints(PointMode.points, [Offset.zero], centerPointPaint);
+    }
   }
 
   void _drawHourHand(Canvas canvas, double radius, double strokeWidth) {
@@ -77,7 +93,7 @@ class HandPainter extends CustomPainter {
     final hourHandPaint = Paint()
       ..color = this.hourHandColor ?? Colors.transparent
       ..strokeWidth = strokeWidth;
-    canvas.drawLine(Offset(0, 0), handOffset, hourHandPaint);
+    canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
   }
 
   /// draw minute hand
@@ -90,7 +106,7 @@ class HandPainter extends CustomPainter {
     final hourHandPaint = Paint()
       ..color = this.minuteHandColor ?? Colors.transparent
       ..strokeWidth = strokeWidth;
-    canvas.drawLine(Offset(0, 0), handOffset, hourHandPaint);
+    canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
   }
 
   /// draw second hand
@@ -103,7 +119,7 @@ class HandPainter extends CustomPainter {
     final hourHandPaint = Paint()
       ..color = this.secondHandColor ?? Colors.transparent
       ..strokeWidth = strokeWidth;
-    canvas.drawLine(Offset(0, 0), handOffset, hourHandPaint);
+    canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
   }
 
   @override

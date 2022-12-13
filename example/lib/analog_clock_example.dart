@@ -35,11 +35,12 @@ class _FlutterAnalogClockDemoState extends State<FlutterAnalogClockDemo> {
     return Scaffold(
       body: SafeArea(
         child: FlutterAnalogClock(
-          dateTime: DateTime(2022, DateTime.december, 13, 15, 17, 18),
-          isLive: false,
-          hourHandColor: Colors.red,
-          minuteHandColor: Colors.green,
-          secondHandColor: Colors.blue,
+          // dateTime: DateTime(2022, DateTime.december, 13, 15, 17, 18),
+          // isLive: false,
+          // hourHandColor: Colors.red,
+          // minuteHandColor: Colors.green,
+          // secondHandColor: Colors.blue,
+          // centerPointColor: Colors.amberAccent,
         ),
 /*
         child: SingleChildScrollView(

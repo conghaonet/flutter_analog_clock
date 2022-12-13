@@ -30,9 +30,10 @@ class FlutterAnalogClock extends StatefulWidget {
   final double minuteHandLengthFactor;
   final double secondHandLengthFactor;
 
-  final Color? centerPointColor;
   final double hourNumberSizeFactor;
   final double hourNumberRadiusFactor;
+  final Color? centerPointColor;
+  final double centerPointWidthFactor;
 
   FlutterAnalogClock({
     super.key,
@@ -56,9 +57,10 @@ class FlutterAnalogClock extends StatefulWidget {
     double? hourHandLengthFactor,
     double? minuteHandLengthFactor,
     double? secondHandLengthFactor,
-    this.centerPointColor = Colors.black,
     double? hourNumberSizeFactor,
     double? hourNumberRadiusFactor,
+    this.centerPointColor = Colors.black,
+    double? centerPointWidthFactor,
   }) :
         this.dateTime = dateTime ?? DateTime.now(),
         this.isLive = isLive ?? true,
@@ -72,7 +74,8 @@ class FlutterAnalogClock extends StatefulWidget {
         this.minuteHandLengthFactor = minuteHandLengthFactor ?? 1.0,
         this.secondHandLengthFactor = secondHandLengthFactor ?? 1.0,
         this.hourNumberSizeFactor = hourNumberSizeFactor ?? 1.0,
-        this.hourNumberRadiusFactor = hourNumberRadiusFactor ?? 1.0;
+        this.hourNumberRadiusFactor = hourNumberRadiusFactor ?? 1.0,
+        this.centerPointWidthFactor = centerPointWidthFactor ?? 1.0;
 
   FlutterAnalogClock.dark({
     Key? key,
@@ -98,9 +101,10 @@ class FlutterAnalogClock extends StatefulWidget {
     double? minuteHandLengthFactor,
     double? secondHandLengthFactor,
 
-    Color? centerPointColor = Colors.grey,
     double? hourNumberSizeFactor,
     double? hourNumberRadiusFactor,
+    Color? centerPointColor = Colors.grey,
+    double? centerPointWidthFactor,
   }) : this(
     key: key,
     dateTime: dateTime,
@@ -123,9 +127,10 @@ class FlutterAnalogClock extends StatefulWidget {
     hourHandLengthFactor: hourHandLengthFactor,
     minuteHandLengthFactor: minuteHandLengthFactor,
     secondHandLengthFactor: secondHandLengthFactor,
-    centerPointColor: centerPointColor,
     hourNumberSizeFactor: hourNumberSizeFactor,
     hourNumberRadiusFactor: hourNumberRadiusFactor,
+    centerPointColor: centerPointColor,
+    centerPointWidthFactor: centerPointWidthFactor,
   );
 
   @override
@@ -183,6 +188,8 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
           hourHandLengthFactor: widget.hourHandLengthFactor,
           minuteHandLengthFactor: widget.minuteHandLengthFactor,
           secondHandLengthFactor: widget.secondHandLengthFactor,
+          centerPointColor: widget.centerPointColor,
+          centerPointWidthFactor: widget.centerPointWidthFactor,
         ),
       ),
     );
