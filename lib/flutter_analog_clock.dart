@@ -9,12 +9,13 @@ import 'package:flutter_analog_clock/hands_painter.dart';
 /// A analog clock.
 class FlutterAnalogClock extends StatefulWidget {
   final DateTime? dateTime;
+  final Widget? child;
   final Color dialColor;
   final Color hourHandColor;
   final Color minuteHandColor;
   final Color secondHandColor;
-  final Color numberColor;
-  final Color borderColor;
+  final Color hourNumberColor;
+  final Color dialBorderColor;
   final Color markingColor;
   final Color centerPointColor;
   final bool showBorder;
@@ -22,21 +23,21 @@ class FlutterAnalogClock extends StatefulWidget {
   final bool showMinuteHand;
   final bool showSecondHand;
   final bool showNumber;
-  final double? borderWidth;
   final double hourNumberScale;
   final List<String> hourNumbers;
   final bool isLive;
-  final Widget? child;
+  final double dialBorderWidthFactor;
 
   const FlutterAnalogClock({
     super.key,
+    this.child,
     this.dateTime,
     this.dialColor = Colors.white,
     this.hourHandColor = Colors.black,
     this.minuteHandColor = Colors.black,
     this.secondHandColor = Colors.black,
-    this.numberColor = Colors.black,
-    this.borderColor = Colors.black,
+    this.hourNumberColor = Colors.black,
+    this.dialBorderColor = Colors.black,
     this.markingColor = Colors.black,
     this.centerPointColor = Colors.black,
     this.showBorder = true,
@@ -44,11 +45,10 @@ class FlutterAnalogClock extends StatefulWidget {
     this.showMinuteHand = true,
     this.showSecondHand = true,
     this.showNumber = true,
-    this.borderWidth,
     this.hourNumberScale = 1.0,
     this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     this.isLive = true,
-    this.child,
+    this.dialBorderWidthFactor = 0.02,
   });
   const FlutterAnalogClock.dark({
     super.key,
@@ -57,8 +57,8 @@ class FlutterAnalogClock extends StatefulWidget {
     this.hourHandColor = Colors.grey,
     this.minuteHandColor = Colors.grey,
     this.secondHandColor = Colors.grey,
-    this.numberColor = Colors.grey,
-    this.borderColor = Colors.black,
+    this.hourNumberColor = Colors.grey,
+    this.dialBorderColor = Colors.black,
     this.markingColor = Colors.grey,
     this.centerPointColor = Colors.grey,
     this.showBorder = true,
@@ -66,11 +66,11 @@ class FlutterAnalogClock extends StatefulWidget {
     this.showMinuteHand = true,
     this.showSecondHand = true,
     this.showNumber = true,
-    this.borderWidth,
     this.hourNumberScale = 1.0,
     this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     this.isLive = true,
     this.child,
+    this.dialBorderWidthFactor = 0.02,
   });
 
   @override
@@ -109,19 +109,16 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
         painter: DialPainter(
           listener: _listener,
           dialColor: widget.dialColor,
-          borderColor: widget.borderColor,
-          borderWidth: widget.borderWidth,
-          borderWidthFactor: null,
+          dialBorderColor: widget.dialBorderColor,
+          dialBorderWidthFactor: null,
           markingColor: widget.markingColor,
-          markingRadiusScale: 0.95,
-          markingWidthScale: 1.0,
-          numberColor: widget.numberColor,
+          markingRadiusFactor: 0.95,
+          markingWidthFactor: 1.0,
+          hourNumberColor: widget.hourNumberColor,
         ),
         foregroundPainter: HandPainter(
           listener: _listener,
           dateTime: _dateTime ?? DateTime.now(),
-          borderWidth: widget.borderWidth,
-          borderWidthFactor: null,
           hourHandColor: widget.hourHandColor,
           minuteHandColor: widget.minuteHandColor,
           secondHandColor: widget.secondHandColor,
@@ -160,8 +157,8 @@ class AnalogClockListener extends Listenable {
   double dialRadius = 0.0;
   double markingRadius = 0.0;
   double bigMarkingWidth = 0.0;
-  double maxTextSize = 0.0;
-  double hourTextRadius = 0.0;
+  double maxHourNumberSide = 0.0;
+  double hourNumberRadius = 0.0;
 
   @override
   void addListener(VoidCallback listener) {

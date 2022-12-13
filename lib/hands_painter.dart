@@ -6,16 +6,12 @@ import 'flutter_analog_clock.dart';
 class HandPainter extends CustomPainter {
   final AnalogClockListener listener;
   final DateTime dateTime;
-  final double? borderWidth;
-  final double? borderWidthFactor;
   final Color? hourHandColor;
   final Color? minuteHandColor;
   final Color? secondHandColor;
   const HandPainter({
     required this.listener,
     required this.dateTime,
-    this.borderWidth,
-    this.borderWidthFactor,
     this.hourHandColor,
     this.minuteHandColor,
     this.secondHandColor,
@@ -23,17 +19,12 @@ class HandPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double clockRadius = math.min(size.width, size.height) / 2;
-    double confirmedBorderWidth = borderWidth ?? 0.0;
-    if(borderWidthFactor != null) {
-      confirmedBorderWidth = clockRadius * borderWidthFactor!;
-    }
     // translate to center of clock
     canvas.translate(size.width / 2, size.height / 2);
 
-    _drawHourHand(canvas, listener.hourTextRadius - listener.maxTextSize/2, listener.dialRadius * 0.06);
-    _drawMinuteHand(canvas, listener.hourTextRadius, listener.dialRadius * 0.03);
-    _drawSecondHand(canvas, listener.markingRadius, listener.dialRadius * 0.015);
+    _drawHourHand(canvas, listener.hourNumberRadius - listener.maxHourNumberSide/2, listener.dialRadius * 0.05);
+    _drawMinuteHand(canvas, listener.hourNumberRadius, listener.dialRadius * 0.02);
+    _drawSecondHand(canvas, listener.markingRadius, listener.dialRadius * 0.01);
   }
 
   void _drawHourHand(Canvas canvas, double radius, double strokeWidth) {
@@ -76,7 +67,7 @@ class HandPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant HandPainter oldDelegate) {
-    return oldDelegate.listener.hourTextRadius != listener.hourTextRadius || oldDelegate.dateTime != dateTime;
+    return oldDelegate.listener.hourNumberRadius != listener.hourNumberRadius || oldDelegate.dateTime != dateTime;
   }
   static double getRadians(double angle) {
     return angle * math.pi / 180;

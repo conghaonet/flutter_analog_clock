@@ -12,9 +12,9 @@ class FlutterAnalogClockDemo extends StatelessWidget {
           color: Colors.grey,
           child: const FlutterAnalogClock(
             dialColor: Colors.lightGreen,
-            borderColor: Colors.black,
+            dialBorderColor: Colors.black,
             hourHandColor: Colors.red,
-            borderWidth: 8.0,
+            dialBorderWidthFactor: 0.02,
           ),
         ),
       ),
@@ -52,7 +52,7 @@ Widget buildClock3() {
     hourHandColor: Colors.red,
     minuteHandColor: Colors.purple,
     secondHandColor: Colors.blue.shade200,
-    borderColor: Colors.green.shade700,
+    dialBorderColor: Colors.green.shade700,
     markingColor: Colors.white,
     centerPointColor: Colors.yellow,
     showNumber: false,
@@ -75,9 +75,8 @@ Widget buildClock4() {
     hourHandColor: Colors.red,
     minuteHandColor: Colors.green,
     markingColor: Colors.green,
-    numberColor: Colors.blue,
+    hourNumberColor: Colors.blue,
     centerPointColor: Colors.white,
-    borderWidth: 0,
     showSecondHand: false,
     showTicks: false,
   );
@@ -104,8 +103,7 @@ Widget buildClock6() {
     minuteHandColor: Colors.white,
     secondHandColor: Colors.white,
     centerPointColor: Colors.white,
-    borderColor: Colors.red.shade700,
-    borderWidth: 24,
+    dialBorderColor: Colors.red.shade700,
     markingColor: Colors.blue.shade900,
   );
 }

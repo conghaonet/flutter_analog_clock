@@ -8,32 +8,30 @@ import 'flutter_analog_clock.dart';
 class DialPainter extends CustomPainter {
   final AnalogClockListener listener;
   final Color? dialColor;
-  final Color? borderColor;
-  final double? borderWidth;
-  final double? borderWidthFactor;
+  final Color? dialBorderColor;
+  final double? dialBorderWidthFactor;
   final Color? markingColor;
-  final double markingRadiusScale;
-  final double markingWidthScale;
+  final double markingRadiusFactor;
+  final double markingWidthFactor;
   final List<String> hourNumbers;
-  final Color? numberColor;
+  final Color? hourNumberColor;
   const DialPainter({
     required this.listener,
     this.dialColor,
-    this.borderColor,
-    this.borderWidth,
-    this.borderWidthFactor,
+    this.dialBorderColor,
+    this.dialBorderWidthFactor,
     this.markingColor,
-    this.markingRadiusScale = 0.95,
-    this.markingWidthScale = 1.0,
+    this.markingRadiusFactor = 0.95,
+    this.markingWidthFactor = 1.0,
     this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    this.numberColor
+    this.hourNumberColor
   }) : super(repaint: listener);
   @override
   void paint(Canvas canvas, Size size) {
     double clockRadius = math.min(size.width, size.height) / 2;
-    double confirmedBorderWidth = borderWidth ?? 0.0;
-    if(borderWidthFactor != null) {
-      confirmedBorderWidth = clockRadius * borderWidthFactor!;
+    double confirmedBorderWidth = 0.0;
+    if(dialBorderWidthFactor != null) {
+      confirmedBorderWidth = clockRadius * dialBorderWidthFactor!;
     }
     listener.dialRadius = clockRadius - confirmedBorderWidth;
     // translate to center of clock
@@ -58,27 +56,27 @@ class DialPainter extends CustomPainter {
         clockRadius - confirmedBorderWidth / 2,
         Paint()
           ..isAntiAlias = true
-          ..color = borderColor ?? Colors.transparent
+          ..color = dialBorderColor ?? Colors.transparent
           ..style = PaintingStyle.stroke
           ..strokeWidth = confirmedBorderWidth,
       );
     }
-    final hourTextRadius = _drawMarkings(canvas, clockRadius - confirmedBorderWidth) * 0.85;
-    _drawHourText(canvas, hourTextRadius);
-    listener.hourTextRadius = hourTextRadius;
+    final hourNumberRadius = _drawMarkings(canvas, clockRadius - confirmedBorderWidth) * 0.85;
+    _drawHourNumber(canvas, hourNumberRadius);
+    listener.hourNumberRadius = hourNumberRadius;
   }
 
   double _drawMarkings(final Canvas canvas, final double radius) {
     if(markingColor == null || markingColor == Colors.transparent) {
       return radius;
     }
-    final double markingRadius = radius * markingRadiusScale;
+    final double markingRadius = radius * markingRadiusFactor;
     listener.markingRadius = markingRadius;
-    double smallMarkingWidth = (radius - markingRadius) / 1.5 * markingWidthScale;
+    double smallMarkingWidth = (radius - markingRadius) / 1.5 * markingWidthFactor;
     if(smallMarkingWidth/2 + markingRadius > radius) {
       smallMarkingWidth = (radius - markingRadius) * 2;
     }
-    double bigMarkingWidth = (radius - markingRadius) / 1 * markingWidthScale;
+    double bigMarkingWidth = (radius - markingRadius) / 1 * markingWidthFactor;
     if(bigMarkingWidth/2 + markingRadius > radius) {
       bigMarkingWidth = (radius - markingRadius) * 2;
     }
@@ -113,26 +111,26 @@ class DialPainter extends CustomPainter {
     return markingRadius - bigMarkingWidth/2;
   }
 
-  /// draw hour text (1 - 12)
-  double _drawHourText(Canvas canvas, double radius) {
-    double maxTextSide = 0;
-    if(numberColor == null || numberColor == Colors.transparent) {
-      return maxTextSide;
+  /// draw hour number (1 - 12)
+  double _drawHourNumber(Canvas canvas, double radius) {
+    double maxHourNumberSide = 0;
+    if(hourNumberColor == null || hourNumberColor == Colors.transparent) {
+      return maxHourNumberSide;
     }
     double fontSize = radius/4;
     for(int i=0; i<12; i++) {
-      int hourIndex = i + 2;
-      if(hourIndex >= 12) hourIndex -= 12;
+      int hourNumberIndex = i + 2;
+      if(hourNumberIndex >= 12) hourNumberIndex -= 12;
       final textPainter = TextPainter(
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr,
         text: TextSpan(
-          text: hourNumbers[hourIndex],
-          style: TextStyle(fontSize: fontSize, color: this.numberColor),
+          text: hourNumbers[hourNumberIndex],
+          style: TextStyle(fontSize: fontSize, color: this.hourNumberColor),
         ),
       )..layout();
       double maxSize = math.max(textPainter.height, textPainter.width);
-      if (maxSize > maxTextSide) maxTextSide = maxSize;
+      if (maxSize > maxHourNumberSide) maxHourNumberSide = maxSize;
 
       double angle = i * 30.0;
       double hourNumberX = math.cos(getRadians(angle)) * radius;
@@ -142,8 +140,8 @@ class DialPainter extends CustomPainter {
       textPainter.paint(canvas, Offset(-textPainter.width/2, -textPainter.height/2));
       canvas.restore();
     }
-    listener.maxTextSize = maxTextSide;
-    return maxTextSide;
+    listener.maxHourNumberSide = maxHourNumberSide;
+    return maxHourNumberSide;
   }
 
   static double getRadians(double angle) {
