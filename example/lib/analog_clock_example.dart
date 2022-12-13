@@ -1,15 +1,15 @@
-import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class FlutterAnalogClockDemo extends StatefulWidget {
-  const FlutterAnalogClockDemo({super.key});
+import 'package:flutter_analog_clock/flutter_analog_clock.dart';
+class AnalogClockDemo extends StatefulWidget {
+  const AnalogClockDemo({super.key});
 
   @override
-  State<FlutterAnalogClockDemo> createState() => _FlutterAnalogClockDemoState();
+  State<AnalogClockDemo> createState() => _AnalogClockDemoState();
 }
 
-class _FlutterAnalogClockDemoState extends State<FlutterAnalogClockDemo> {
+class _AnalogClockDemoState extends State<AnalogClockDemo> {
   Color? _dialColor;
   Color? _dialBorderColor;
   double? _dialBorderWidthFactor;
@@ -34,7 +34,7 @@ class _FlutterAnalogClockDemoState extends State<FlutterAnalogClockDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: FlutterAnalogClock(
+        child: AnalogClock(
           // dateTime: DateTime(2022, DateTime.december, 13, 15, 17, 18),
           // isLive: false,
           // hourHandColor: Colors.red,
@@ -154,13 +154,13 @@ class _FlutterAnalogClockDemoState extends State<FlutterAnalogClockDemo> {
 }
 
 Widget buildClock1() {
-  return FlutterAnalogClock();
+  return AnalogClock();
 }
 
 Widget buildClock2() {
   DateTime dateTime = DateTime.now();
   dateTime = dateTime.add(const Duration(hours: 8));
-  return FlutterAnalogClock.dark(
+  return AnalogClock.dark(
     dateTime: dateTime,
     child: const Center(
       child: Padding(
@@ -177,7 +177,7 @@ Widget buildClock2() {
 Widget buildClock3() {
   DateTime dateTime = DateTime.now();
   dateTime = dateTime.add(const Duration(hours: -8));
-  return FlutterAnalogClock(
+  return AnalogClock(
     dateTime: dateTime,
     dialColor: Colors.green,
     hourHandColor: Colors.red,
@@ -199,7 +199,7 @@ Widget buildClock3() {
 }
 
 Widget buildClock4() {
-  return FlutterAnalogClock(
+  return AnalogClock(
     hourNumbers: const ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
     dialColor: Colors.yellow,
     hourHandColor: Colors.red,
@@ -211,7 +211,7 @@ Widget buildClock4() {
 }
 
 Widget buildClock5() {
-  return FlutterAnalogClock(
+  return AnalogClock(
     dialColor: Colors.blue,
     hourHandColor: Colors.white,
     centerPointColor: Colors.white,
@@ -219,7 +219,7 @@ Widget buildClock5() {
 }
 
 Widget buildClock6() {
-  return FlutterAnalogClock(
+  return AnalogClock(
     hourNumbers: const ['', '', '3', '', '', '6', '', '', '9', '', '', '12'],
     dialColor: Colors.red,
     hourHandColor: Colors.white,

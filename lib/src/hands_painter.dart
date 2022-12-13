@@ -3,7 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'flutter_analog_clock.dart';
+import 'analog_clock_listener.dart';
+import 'analog_clock_util.dart';
 
 class HandPainter extends CustomPainter {
   final AnalogClockListener listener;
@@ -87,8 +88,8 @@ class HandPainter extends CustomPainter {
   void _drawHourHand(Canvas canvas, double radius, double strokeWidth) {
     double angle = dateTime.hour % 12 + dateTime.minute / 60.0 - 3;
     Offset handOffset = Offset(
-        math.cos(getRadians(angle * 30)) * radius,
-        math.sin(getRadians(angle * 30)) * radius
+        math.cos(AnalogClockUtil.getRadians(angle * 30)) * radius,
+        math.sin(AnalogClockUtil.getRadians(angle * 30)) * radius
     );
     final hourHandPaint = Paint()
       ..color = this.hourHandColor ?? Colors.transparent
@@ -100,8 +101,8 @@ class HandPainter extends CustomPainter {
   void _drawMinuteHand(Canvas canvas, double radius, double strokeWidth) {
     double angle = dateTime.minute - 15.0;
     Offset handOffset = Offset(
-        math.cos(getRadians(angle * 6.0)) * radius,
-        math.sin(getRadians(angle * 6.0)) * radius
+        math.cos(AnalogClockUtil.getRadians(angle * 6.0)) * radius,
+        math.sin(AnalogClockUtil.getRadians(angle * 6.0)) * radius
     );
     final hourHandPaint = Paint()
       ..color = this.minuteHandColor ?? Colors.transparent
@@ -113,8 +114,8 @@ class HandPainter extends CustomPainter {
   void _drawSecondHand(Canvas canvas, double radius, double strokeWidth) {
     double angle = dateTime.second - 15.0;
     Offset handOffset = Offset(
-        math.cos(getRadians(angle * 6.0)) * radius,
-        math.sin(getRadians(angle * 6.0)) * radius
+        math.cos(AnalogClockUtil.getRadians(angle * 6.0)) * radius,
+        math.sin(AnalogClockUtil.getRadians(angle * 6.0)) * radius
     );
     final hourHandPaint = Paint()
       ..color = this.secondHandColor ?? Colors.transparent
@@ -128,8 +129,5 @@ class HandPainter extends CustomPainter {
         || oldDelegate.dateTime != dateTime
         || oldDelegate.hourHandColor != hourHandColor
     ;
-  }
-  static double getRadians(double angle) {
-    return angle * math.pi / 180;
   }
 }

@@ -2,8 +2,8 @@ import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-import 'flutter_analog_clock.dart';
-
+import 'analog_clock_listener.dart';
+import 'analog_clock_util.dart';
 
 class DialPainter extends CustomPainter {
   final AnalogClockListener listener;
@@ -91,12 +91,12 @@ class DialPainter extends CustomPainter {
     for (var i = 0; i < 60; i++) {
       double _angle = i * 6.0;
       if (i % 5 != 0) {
-        double x = math.cos(getRadians(_angle)) * markingRadius;
-        double y = math.sin(getRadians(_angle)) * markingRadius;
+        double x = math.cos(AnalogClockUtil.getRadians(_angle)) * markingRadius;
+        double y = math.sin(AnalogClockUtil.getRadians(_angle)) * markingRadius;
         smallMarkings.add(Offset(x, y));
       } else {
-        double x = math.cos(getRadians(_angle)) * markingRadius;
-        double y = math.sin(getRadians(_angle)) * markingRadius;
+        double x = math.cos(AnalogClockUtil.getRadians(_angle)) * markingRadius;
+        double y = math.sin(AnalogClockUtil.getRadians(_angle)) * markingRadius;
         bigMarkings.add(Offset(x, y));
       }
     }
@@ -139,18 +139,14 @@ class DialPainter extends CustomPainter {
       if (maxSize > maxHourNumberSide) maxHourNumberSide = maxSize;
 
       double angle = i * 30.0;
-      double hourNumberX = math.cos(getRadians(angle)) * radius;
-      double hourNumberY = math.sin(getRadians(angle)) * radius;
+      double hourNumberX = math.cos(AnalogClockUtil.getRadians(angle)) * radius;
+      double hourNumberY = math.sin(AnalogClockUtil.getRadians(angle)) * radius;
       canvas.save();
       canvas.translate(hourNumberX, hourNumberY);
       textPainter.paint(canvas, Offset(-textPainter.width/2, -textPainter.height/2));
       canvas.restore();
     }
     listener.maxHourNumberSide = maxHourNumberSide;
-  }
-
-  static double getRadians(double angle) {
-    return angle * math.pi / 180;
   }
 
   @override
