@@ -55,7 +55,6 @@ Widget buildClock3() {
     dialBorderColor: Colors.green.shade700,
     markingColor: Colors.white,
     centerPointColor: Colors.yellow,
-    showNumber: false,
     child: const Center(
       child: Padding(
         padding: EdgeInsets.only(bottom: 100),
@@ -77,8 +76,6 @@ Widget buildClock4() {
     markingColor: Colors.green,
     hourNumberColor: Colors.blue,
     centerPointColor: Colors.white,
-    showSecondHand: false,
-    showTicks: false,
   );
 }
 
@@ -87,11 +84,6 @@ Widget buildClock5() {
     dialColor: Colors.blue,
     hourHandColor: Colors.white,
     centerPointColor: Colors.white,
-    showMinuteHand: false,
-    showSecondHand: false,
-    showBorder: false,
-    showTicks: false,
-    showNumber: false,
   );
 }
 

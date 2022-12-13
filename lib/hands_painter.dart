@@ -9,12 +9,24 @@ class HandPainter extends CustomPainter {
   final Color? hourHandColor;
   final Color? minuteHandColor;
   final Color? secondHandColor;
+  final double hourHandWidthFactor;
+  final double minuteHandWidthFactor;
+  final double secondHandWidthFactor;
+  final double hourHandLengthFactor;
+  final double minuteHandLengthFactor;
+  final double secondHandLengthFactor;
   const HandPainter({
     required this.listener,
     required this.dateTime,
     this.hourHandColor,
     this.minuteHandColor,
     this.secondHandColor,
+    this.hourHandWidthFactor = 1.0,
+    this.minuteHandWidthFactor = 1.0,
+    this.secondHandWidthFactor = 1.0,
+    this.hourHandLengthFactor = 1.0,
+    this.minuteHandLengthFactor = 1.0,
+    this.secondHandLengthFactor = 1.0,
   }) : super(repaint: listener);
 
   @override
@@ -22,9 +34,27 @@ class HandPainter extends CustomPainter {
     // translate to center of clock
     canvas.translate(size.width / 2, size.height / 2);
 
-    _drawHourHand(canvas, listener.hourNumberRadius - listener.maxHourNumberSide/2, listener.dialRadius * 0.05);
-    _drawMinuteHand(canvas, listener.hourNumberRadius, listener.dialRadius * 0.02);
-    _drawSecondHand(canvas, listener.markingRadius, listener.dialRadius * 0.01);
+    if(hourHandLengthFactor > 0 && hourHandWidthFactor > 0) {
+      _drawHourHand(
+        canvas,
+        (listener.hourNumberRadius - listener.maxHourNumberSide/2) * hourHandLengthFactor,
+        listener.dialRadius * 0.05 * hourHandWidthFactor,
+      );
+    }
+    if(minuteHandLengthFactor > 0 && minuteHandWidthFactor > 0) {
+      _drawMinuteHand(
+        canvas,
+        listener.hourNumberRadius * minuteHandLengthFactor,
+        listener.dialRadius * 0.02 * minuteHandWidthFactor,
+      );
+    }
+    if(secondHandLengthFactor > 0 && secondHandWidthFactor > 0) {
+      _drawSecondHand(
+        canvas,
+        listener.markingRadius * secondHandLengthFactor,
+        listener.dialRadius * 0.01 * secondHandWidthFactor,
+      );
+    }
   }
 
   void _drawHourHand(Canvas canvas, double radius, double strokeWidth) {

@@ -9,68 +9,83 @@ import 'package:flutter_analog_clock/hands_painter.dart';
 /// A analog clock.
 class FlutterAnalogClock extends StatefulWidget {
   final DateTime? dateTime;
+  final bool isLive;
   final Widget? child;
   final Color dialColor;
+  final Color dialBorderColor;
+  final double dialBorderWidthFactor;
+  final Color markingColor;
+  final double markingRadiusFactor;
+  final double markingWidthFactor;
+  final List<String> hourNumbers;
+  final Color hourNumberColor;
+
   final Color hourHandColor;
   final Color minuteHandColor;
   final Color secondHandColor;
-  final Color hourNumberColor;
-  final Color dialBorderColor;
-  final Color markingColor;
+  final double hourHandWidthFactor;
+  final double minuteHandWidthFactor;
+  final double secondHandWidthFactor;
+  final double hourHandLengthFactor;
+  final double minuteHandLengthFactor;
+  final double secondHandLengthFactor;
+
   final Color centerPointColor;
-  final bool showBorder;
-  final bool showTicks;
-  final bool showMinuteHand;
-  final bool showSecondHand;
-  final bool showNumber;
   final double hourNumberScale;
-  final List<String> hourNumbers;
-  final bool isLive;
-  final double dialBorderWidthFactor;
 
   const FlutterAnalogClock({
     super.key,
-    this.child,
     this.dateTime,
+    this.isLive = true,
+    this.child,
     this.dialColor = Colors.white,
+    this.dialBorderColor = Colors.black,
+    this.dialBorderWidthFactor = 0.02,
+    this.markingColor = Colors.black,
+    this.markingRadiusFactor = 1.0,
+    this.markingWidthFactor = 1.0,
+    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    this.hourNumberColor = Colors.black,
+
     this.hourHandColor = Colors.black,
     this.minuteHandColor = Colors.black,
     this.secondHandColor = Colors.black,
-    this.hourNumberColor = Colors.black,
-    this.dialBorderColor = Colors.black,
-    this.markingColor = Colors.black,
+    this.hourHandWidthFactor = 1.0,
+    this.minuteHandWidthFactor = 1.0,
+    this.secondHandWidthFactor = 1.0,
+    this.hourHandLengthFactor = 1.0,
+    this.minuteHandLengthFactor = 1.0,
+    this.secondHandLengthFactor = 1.0,
+
     this.centerPointColor = Colors.black,
-    this.showBorder = true,
-    this.showTicks = true,
-    this.showMinuteHand = true,
-    this.showSecondHand = true,
-    this.showNumber = true,
     this.hourNumberScale = 1.0,
-    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    this.isLive = true,
-    this.dialBorderWidthFactor = 0.02,
   });
   const FlutterAnalogClock.dark({
     super.key,
     this.dateTime,
+    this.isLive = true,
+    this.child,
     this.dialColor = Colors.black,
+    this.dialBorderColor = Colors.black,
+    this.dialBorderWidthFactor = 0.02,
+    this.markingColor = Colors.grey,
+    this.markingRadiusFactor = 1.0,
+    this.markingWidthFactor = 1.0,
+    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    this.hourNumberColor = Colors.grey,
+
     this.hourHandColor = Colors.grey,
     this.minuteHandColor = Colors.grey,
     this.secondHandColor = Colors.grey,
-    this.hourNumberColor = Colors.grey,
-    this.dialBorderColor = Colors.black,
-    this.markingColor = Colors.grey,
+    this.hourHandWidthFactor = 1.0,
+    this.minuteHandWidthFactor = 1.0,
+    this.secondHandWidthFactor = 1.0,
+    this.hourHandLengthFactor = 1.0,
+    this.minuteHandLengthFactor = 1.0,
+    this.secondHandLengthFactor = 1.0,
+
     this.centerPointColor = Colors.grey,
-    this.showBorder = true,
-    this.showTicks = true,
-    this.showMinuteHand = true,
-    this.showSecondHand = true,
-    this.showNumber = true,
     this.hourNumberScale = 1.0,
-    this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    this.isLive = true,
-    this.child,
-    this.dialBorderWidthFactor = 0.02,
   });
 
   @override
@@ -110,10 +125,11 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
           listener: _listener,
           dialColor: widget.dialColor,
           dialBorderColor: widget.dialBorderColor,
-          dialBorderWidthFactor: null,
+          dialBorderWidthFactor: widget.dialBorderWidthFactor,
           markingColor: widget.markingColor,
-          markingRadiusFactor: 0.95,
-          markingWidthFactor: 1.0,
+          markingRadiusFactor: widget.markingRadiusFactor,
+          markingWidthFactor: widget.markingWidthFactor,
+          hourNumbers: widget.hourNumbers,
           hourNumberColor: widget.hourNumberColor,
         ),
         foregroundPainter: HandPainter(
@@ -122,26 +138,13 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
           hourHandColor: widget.hourHandColor,
           minuteHandColor: widget.minuteHandColor,
           secondHandColor: widget.secondHandColor,
+          hourHandWidthFactor: 1.0,
+          minuteHandWidthFactor: 1.0,
+          secondHandWidthFactor: 1.0,
+          hourHandLengthFactor: 1.0,
+          minuteHandLengthFactor: 1.0,
+          secondHandLengthFactor: 1.0,
         ),
-        /*painter: FlutterAnalogClockPainter(
-          _dateTime ?? DateTime.now(),
-          dialColor: widget.dialColor,
-          hourHandColor: widget.hourHandColor,
-          minuteHandColor: widget.minuteHandColor,
-          secondHandColor: widget.secondHandColor,
-          numberColor: widget.numberColor,
-          borderColor: widget.borderColor,
-          markingColor: widget.markingColor,
-          centerPointColor: widget.centerPointColor,
-          showBorder: widget.showBorder,
-          showTicks: widget.showTicks,
-          showMinuteHand: widget.showMinuteHand,
-          showSecondHand: widget.showSecondHand,
-          showNumber: widget.showNumber,
-          borderWidth: widget.borderWidth,
-          hourNumberScale: widget.hourNumberScale,
-          hourNumbers: widget.hourNumbers,
-        ),*/
       ),
     );
   }

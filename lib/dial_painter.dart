@@ -9,7 +9,7 @@ class DialPainter extends CustomPainter {
   final AnalogClockListener listener;
   final Color? dialColor;
   final Color? dialBorderColor;
-  final double? dialBorderWidthFactor;
+  final double dialBorderWidthFactor;
   final Color? markingColor;
   final double markingRadiusFactor;
   final double markingWidthFactor;
@@ -19,9 +19,9 @@ class DialPainter extends CustomPainter {
     required this.listener,
     this.dialColor,
     this.dialBorderColor,
-    this.dialBorderWidthFactor,
+    this.dialBorderWidthFactor = 0.0,
     this.markingColor,
-    this.markingRadiusFactor = 0.95,
+    this.markingRadiusFactor = 1.0,
     this.markingWidthFactor = 1.0,
     this.hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     this.hourNumberColor
@@ -29,11 +29,8 @@ class DialPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     double clockRadius = math.min(size.width, size.height) / 2;
-    double confirmedBorderWidth = 0.0;
-    if(dialBorderWidthFactor != null) {
-      confirmedBorderWidth = clockRadius * dialBorderWidthFactor!;
-    }
-    listener.dialRadius = clockRadius - confirmedBorderWidth;
+    double dialBorderWidth = clockRadius * dialBorderWidthFactor;
+    listener.dialRadius = clockRadius - dialBorderWidth;
     // translate to center of clock
     canvas.translate(size.width / 2, size.height / 2);
 
@@ -41,7 +38,7 @@ class DialPainter extends CustomPainter {
     if(dialColor != null && dialColor != Colors.transparent) {
       canvas.drawCircle(
         Offset.zero,
-        clockRadius - confirmedBorderWidth,
+        clockRadius - dialBorderWidth,
         Paint()
           ..isAntiAlias = true
           ..color = dialColor!
@@ -50,18 +47,18 @@ class DialPainter extends CustomPainter {
     }
 
     // draw border
-    if(confirmedBorderWidth > 0) {
+    if(dialBorderWidth > 0) {
       canvas.drawCircle(
         Offset.zero,
-        clockRadius - confirmedBorderWidth / 2,
+        clockRadius - dialBorderWidth / 2,
         Paint()
           ..isAntiAlias = true
           ..color = dialBorderColor ?? Colors.transparent
           ..style = PaintingStyle.stroke
-          ..strokeWidth = confirmedBorderWidth,
+          ..strokeWidth = dialBorderWidth,
       );
     }
-    final hourNumberRadius = _drawMarkings(canvas, clockRadius - confirmedBorderWidth) * 0.85;
+    final hourNumberRadius = _drawMarkings(canvas, clockRadius - dialBorderWidth) * 0.85;
     _drawHourNumber(canvas, hourNumberRadius);
     listener.hourNumberRadius = hourNumberRadius;
   }
@@ -70,7 +67,7 @@ class DialPainter extends CustomPainter {
     if(markingColor == null || markingColor == Colors.transparent) {
       return radius;
     }
-    final double markingRadius = radius * markingRadiusFactor;
+    final double markingRadius = radius * 0.95 * markingRadiusFactor;
     listener.markingRadius = markingRadius;
     double smallMarkingWidth = (radius - markingRadius) / 1.5 * markingWidthFactor;
     if(smallMarkingWidth/2 + markingRadius > radius) {
