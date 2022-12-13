@@ -21,12 +21,12 @@ class HandPainter extends CustomPainter {
     this.hourHandColor,
     this.minuteHandColor,
     this.secondHandColor,
-    this.hourHandWidthFactor = 1.0,
-    this.minuteHandWidthFactor = 1.0,
-    this.secondHandWidthFactor = 1.0,
-    this.hourHandLengthFactor = 1.0,
-    this.minuteHandLengthFactor = 1.0,
-    this.secondHandLengthFactor = 1.0,
+    required this.hourHandWidthFactor,
+    required this.minuteHandWidthFactor,
+    required this.secondHandWidthFactor,
+    required this.hourHandLengthFactor,
+    required this.minuteHandLengthFactor,
+    required this.secondHandLengthFactor,
   }) : super(repaint: listener);
 
   @override
@@ -34,24 +34,35 @@ class HandPainter extends CustomPainter {
     // translate to center of clock
     canvas.translate(size.width / 2, size.height / 2);
 
-    if(hourHandLengthFactor > 0 && hourHandWidthFactor > 0) {
+    if(hourHandLengthFactor > 0.0 && hourHandWidthFactor > 0.0
+        && hourHandColor != null && hourHandColor != Colors.transparent) {
+      double hourRadius = (listener.hourNumberRadius - listener.maxHourNumberSide/1.5) * hourHandLengthFactor;
+      if(listener.maxHourNumberSide <= 0.0) {
+        hourRadius = listener.hourNumberRadius * 0.75 * hourHandLengthFactor;
+      }
       _drawHourHand(
         canvas,
-        (listener.hourNumberRadius - listener.maxHourNumberSide/2) * hourHandLengthFactor,
+        hourRadius,
         listener.dialRadius * 0.05 * hourHandWidthFactor,
       );
     }
-    if(minuteHandLengthFactor > 0 && minuteHandWidthFactor > 0) {
+    if(minuteHandLengthFactor > 0.0 && minuteHandWidthFactor > 0.0
+        && minuteHandColor != null && minuteHandColor != Colors.transparent) {
       _drawMinuteHand(
         canvas,
         listener.hourNumberRadius * minuteHandLengthFactor,
         listener.dialRadius * 0.02 * minuteHandWidthFactor,
       );
     }
-    if(secondHandLengthFactor > 0 && secondHandWidthFactor > 0) {
+    if(secondHandLengthFactor > 0.0 && secondHandWidthFactor > 0.0
+        && secondHandColor != null && secondHandColor != Colors.transparent) {
+      double secondRadius = listener.markingRadius * secondHandLengthFactor;
+      if(secondRadius == 0) {
+        secondRadius = listener.dialRadius * 0.95 * secondHandLengthFactor;
+      }
       _drawSecondHand(
         canvas,
-        listener.markingRadius * secondHandLengthFactor,
+        secondRadius,
         listener.dialRadius * 0.01 * secondHandWidthFactor,
       );
     }
@@ -97,7 +108,10 @@ class HandPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant HandPainter oldDelegate) {
-    return oldDelegate.listener.hourNumberRadius != listener.hourNumberRadius || oldDelegate.dateTime != dateTime;
+    return oldDelegate.listener.hourNumberRadius != listener.hourNumberRadius
+        || oldDelegate.dateTime != dateTime
+        || oldDelegate.hourHandColor != hourHandColor
+    ;
   }
   static double getRadians(double angle) {
     return angle * math.pi / 180;
