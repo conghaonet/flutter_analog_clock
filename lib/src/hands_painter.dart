@@ -125,6 +125,17 @@ class HandPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant HandPainter oldDelegate) {
-    return oldDelegate.dateTime != dateTime;
+    return oldDelegate.dateTime != dateTime
+        || oldDelegate.hourHandColor != hourHandColor
+        || oldDelegate.minuteHandColor != minuteHandColor
+        || oldDelegate.secondHandColor != secondHandColor
+        || oldDelegate.centerPointColor != centerPointColor
+        || oldDelegate.hourHandWidthFactor != hourHandWidthFactor
+        || oldDelegate.minuteHandWidthFactor != minuteHandWidthFactor
+        || oldDelegate.secondHandWidthFactor != secondHandWidthFactor
+        || oldDelegate.hourHandLengthFactor != hourHandLengthFactor
+        || oldDelegate.minuteHandLengthFactor != minuteHandLengthFactor
+        || oldDelegate.secondHandLengthFactor != secondHandLengthFactor
+        || oldDelegate.centerPointWidthFactor != centerPointWidthFactor;
   }
 }

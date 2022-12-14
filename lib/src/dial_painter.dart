@@ -79,7 +79,7 @@ class DialPainter extends CustomPainter {
     }
     final double markingRadius = radius * 0.95;
     final double markingRadiusWithFactor = markingRadius * markingRadiusFactor;
-    listener.markingRadius = markingRadius;
+    listener.markingRadius = markingRadiusWithFactor;
     double smallMarkingWidth = (radius - markingRadius) / 1.5 * markingWidthFactor;
     if(smallMarkingWidth/2 + markingRadius > radius) {
       smallMarkingWidth = (radius - markingRadius) * 2;
@@ -164,8 +164,7 @@ class DialPainter extends CustomPainter {
         || oldDelegate.hourNumbers != hourNumbers
         || oldDelegate.hourNumberColor != hourNumberColor
         || oldDelegate.hourNumberSizeFactor != hourNumberSizeFactor
-        || oldDelegate.hourNumberRadiusFactor != hourNumberRadiusFactor
-    ;
+        || oldDelegate.hourNumberRadiusFactor != hourNumberRadiusFactor;
   }
 
 }

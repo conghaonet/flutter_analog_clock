@@ -18,6 +18,7 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   Color? _markingColor = Colors.black;
   double? _markingRadiusFactor;
   double? _markingWidthFactor;
+  List<String> _hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   Color? _hourNumberColor = Colors.black;
   double? _hourNumberSizeFactor;
   double? _hourNumberRadiusFactor;
@@ -34,17 +35,11 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   double? _centerPointWidthFactor;
   final math.Random _random = math.Random();
   final GlobalKey<AnalogClockState> clockKey = GlobalKey();
-  // static const List<Color> colors = [
-  //   Colors.black, Colors.white, Colors.blue, Colors.amber, Colors.green,
-  //   Colors.red, Colors.yellow, Colors.cyan, Colors.brown, Colors.indigo,
-  //   Colors.lime, Colors.orange, Colors.pink, Colors.purple, Colors.teal,
-  // ];
   static const List<Color> colors = [
-    Colors.black, Colors.white, Colors.red, Colors.green, Colors.blue,
-    Colors.yellow, Colors.purple,
+    Colors.black, Colors.white, Colors.red,
+    Colors.green, Colors.blue, Colors.yellow, Colors.purple,
   ];
-
-  SettingGroup _selectedSettingGroup = SettingGroup.values[1];
+  SettingGroup _selectedSettingGroup = SettingGroup.values[0];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +59,20 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
                 markingRadiusFactor: _markingRadiusFactor,
                 markingWidthFactor: _markingWidthFactor,
                 hourNumberColor: _hourNumberColor,
+                hourNumbers: _hourNumbers,
+                hourNumberSizeFactor: _hourNumberSizeFactor,
+                hourNumberRadiusFactor: _hourNumberRadiusFactor,
+                hourHandColor: _hourHandColor,
+                hourHandWidthFactor: _hourHandWidthFactor,
+                hourHandLengthFactor: _hourHandLengthFactor,
+                minuteHandColor: _minuteHandColor,
+                minuteHandWidthFactor: _minuteHandWidthFactor,
+                minuteHandLengthFactor: _minuteHandLengthFactor,
+                secondHandColor: _secondHandColor,
+                secondHandWidthFactor: _secondHandWidthFactor,
+                secondHandLengthFactor: _secondHandLengthFactor,
+                centerPointColor: _centerPointColor,
+                centerPointWidthFactor: _centerPointWidthFactor,
               ),
             ),
             Expanded(
@@ -129,10 +138,10 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
         return _buildDialSetting();
       case SettingGroup.marking:
         return _buildMarkSetting();
-      // case SettingGroup.number:
-      //   return _buildDialSetting();
-      // case SettingGroup.hands:
-      //   return _buildDialSetting();
+      case SettingGroup.number:
+        return _buildNumberSetting();
+      case SettingGroup.hands:
+        return _buildHandSetting();
       default:
         return const Text('Error!');
     }
@@ -179,12 +188,154 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
             _buildFactorSlider(PartFactor.markingRadius),
           ],
         ),
-        // Row(
-        //   children: [
-        //     const Text('Width: '),
-        //     _buildFactorSlider(PartFactor.markingWidth),
-        //   ],
-        // ),
+        Row(
+          children: [
+            const Text('Width: '),
+            _buildFactorSlider(PartFactor.markingWidth),
+          ],
+        ),
+      ],
+    );
+  }
+  Widget _buildNumberSetting() {
+    void onHourNumberChanged(List<String>? numbers) {
+      if(numbers != null) {
+        setState(() {
+          _hourNumbers = numbers;
+        });
+      }
+    }
+    return Column(
+      children: [
+        Row(
+          children: [
+            const Text('Number: '),
+            Expanded(child: _buildColorPicker(PartColor.hourNumber)),
+          ],
+        ),
+        const SizedBox(height: 8,),
+        Row(
+          children: [
+            const Text('Size: '),
+            _buildFactorSlider(PartFactor.numberSize),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Radius: '),
+            _buildFactorSlider(PartFactor.numberRadius),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Hour\nnumber: '),
+            Expanded(
+              child: Column(
+                children: [
+                  RadioListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                    groupValue: _hourNumbers,
+                    onChanged: onHourNumberChanged,
+                    title: const Text('1,2,3,4,5,6,7,8,9,10,11,12', maxLines: 1, overflow: TextOverflow.ellipsis,) ,
+                    selected: _hourNumbers == const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                  ),
+                  RadioListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: const ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
+                    groupValue: _hourNumbers,
+                    onChanged: onHourNumberChanged,
+                    title: const Text('I,II,III,IV,V,VI,VII,VIII,IX,X,XI,XII', maxLines: 1, overflow: TextOverflow.ellipsis,),
+                    selected: _hourNumbers == const ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
+                  ),
+                  RadioListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: const ['', '', '3', '', '', '6', '', '', '9', '', '', '12'],
+                    groupValue: _hourNumbers,
+                    onChanged: onHourNumberChanged,
+                    title: const Text(',,3,,,6,,,9,,,12', maxLines: 1, overflow: TextOverflow.ellipsis,) ,
+                    selected: _hourNumbers == const ['', '', '3', '', '', '6', '', '', '9', '', '', '12'],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+  Widget _buildHandSetting() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            const Text('Hour: '),
+            Expanded(child: _buildColorPicker(PartColor.hourHand)),
+          ],
+        ),
+        const SizedBox(height: 8,),
+        Row(
+          children: [
+            const Text('Minute: '),
+            Expanded(child: _buildColorPicker(PartColor.minuteHand)),
+          ],
+        ),
+        const SizedBox(height: 8,),
+        Row(
+          children: [
+            const Text('Second: '),
+            Expanded(child: _buildColorPicker(PartColor.secondHand)),
+          ],
+        ),
+        const SizedBox(height: 8,),
+        Row(
+          children: [
+            const Text('Center: '),
+            Expanded(child: _buildColorPicker(PartColor.centerPoint)),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Hour width: '),
+            _buildFactorSlider(PartFactor.hourWidth),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Hour length: '),
+            _buildFactorSlider(PartFactor.hourLength),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Minute width: '),
+            _buildFactorSlider(PartFactor.minuteWidth),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Minute length: '),
+            _buildFactorSlider(PartFactor.minuteLength),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Second width: '),
+            _buildFactorSlider(PartFactor.secondWidth),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Second length: '),
+            _buildFactorSlider(PartFactor.secondLength),
+          ],
+        ),
+        Row(
+          children: [
+            const Text('Center point: '),
+            _buildFactorSlider(PartFactor.centerPointWidth),
+          ],
+        ),
       ],
     );
   }
