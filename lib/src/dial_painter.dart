@@ -32,7 +32,7 @@ class DialPainter extends CustomPainter {
     required this.hourNumberSizeFactor,
     required this.hourNumberRadiusFactor,
   }) :  assert(hourNumbers == null || hourNumbers.length == 0 || hourNumbers.length == hourNumbersLength),
-        assert(dialBorderWidthFactor >= 0.0 && dialBorderWidthFactor < 1.0),
+        assert(dialBorderWidthFactor >= 0.0 && dialBorderWidthFactor <= 1.0),
         super(repaint: listener);
 
   @override
@@ -77,7 +77,8 @@ class DialPainter extends CustomPainter {
         || markingRadiusFactor <= 0.0 || markingWidthFactor <= 0.0) {
       return radius;
     }
-    final double markingRadius = radius * 0.95 * markingRadiusFactor;
+    final double markingRadius = radius * 0.95;
+    final double markingRadiusWithFactor = markingRadius * markingRadiusFactor;
     listener.markingRadius = markingRadius;
     double smallMarkingWidth = (radius - markingRadius) / 1.5 * markingWidthFactor;
     if(smallMarkingWidth/2 + markingRadius > radius) {
@@ -94,12 +95,12 @@ class DialPainter extends CustomPainter {
     for (var i = 0; i < 60; i++) {
       double _angle = i * 6.0;
       if (i % 5 != 0) {
-        double x = math.cos(AnalogClockUtil.getRadians(_angle)) * markingRadius;
-        double y = math.sin(AnalogClockUtil.getRadians(_angle)) * markingRadius;
+        double x = math.cos(AnalogClockUtil.getRadians(_angle)) * markingRadiusWithFactor;
+        double y = math.sin(AnalogClockUtil.getRadians(_angle)) * markingRadiusWithFactor;
         smallMarkings.add(Offset(x, y));
       } else {
-        double x = math.cos(AnalogClockUtil.getRadians(_angle)) * markingRadius;
-        double y = math.sin(AnalogClockUtil.getRadians(_angle)) * markingRadius;
+        double x = math.cos(AnalogClockUtil.getRadians(_angle)) * markingRadiusWithFactor;
+        double y = math.sin(AnalogClockUtil.getRadians(_angle)) * markingRadiusWithFactor;
         bigMarkings.add(Offset(x, y));
       }
     }
@@ -115,7 +116,7 @@ class DialPainter extends CustomPainter {
       ..strokeWidth = bigMarkingWidth
       ..strokeCap = StrokeCap.round;
     canvas.drawPoints(PointMode.points, bigMarkings, bigMarkingPaint);
-    return markingRadius - bigMarkingWidth/2;
+    return markingRadiusWithFactor - bigMarkingWidth/2;
   }
 
   /// draw hour number (1 - 12)
@@ -154,7 +155,17 @@ class DialPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant DialPainter oldDelegate) {
-    return false;
+    return oldDelegate.dialColor != dialColor
+        || oldDelegate.dialBorderColor != dialBorderColor
+        || oldDelegate.dialBorderWidthFactor != dialBorderWidthFactor
+        || oldDelegate.markingColor != markingColor
+        || oldDelegate.markingRadiusFactor != markingRadiusFactor
+        || oldDelegate.markingWidthFactor != markingWidthFactor
+        || oldDelegate.hourNumbers != hourNumbers
+        || oldDelegate.hourNumberColor != hourNumberColor
+        || oldDelegate.hourNumberSizeFactor != hourNumberSizeFactor
+        || oldDelegate.hourNumberRadiusFactor != hourNumberRadiusFactor
+    ;
   }
 
 }

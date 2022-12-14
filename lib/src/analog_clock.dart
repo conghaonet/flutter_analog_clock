@@ -59,7 +59,7 @@ class AnalogClock extends StatefulWidget {
     this.centerPointColor = Colors.black,
     double? centerPointWidthFactor,
   }) :  assert(hourNumbers == null || hourNumbers.isEmpty || hourNumbers.length == 12),
-        assert(dialBorderWidthFactor == null || (dialBorderWidthFactor >= 0.0 && dialBorderWidthFactor < 1.0)),
+        assert(dialBorderWidthFactor == null || (dialBorderWidthFactor >= 0.0 && dialBorderWidthFactor <= 1.0)),
         this.isKeepTime = isKeepTime ?? true,
         this.dialBorderWidthFactor = dialBorderWidthFactor ?? 0.0,
         this.markingRadiusFactor = markingRadiusFactor ?? 1.0,
