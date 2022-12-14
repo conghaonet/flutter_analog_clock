@@ -10,8 +10,8 @@ class AnalogClockDemo extends StatefulWidget {
 }
 
 class _AnalogClockDemoState extends State<AnalogClockDemo> {
-  bool _clockIsLive = false;
-  DateTime _dateTime = DateTime.now();
+  bool _isKeepTime = true;
+  DateTime? _dateTime;
   Color? _dialColor;
   Color? _dialBorderColor;
   double? _dialBorderWidthFactor = 0.01;
@@ -36,22 +36,22 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.grey,
-        child: SafeArea(
+      body: SafeArea(
+        child: Container(
+          color: Colors.grey,
           child: AnalogClock(
             key: clockKey,
             dateTime: _dateTime,
+            // hourNumbers: const ['a','b','c'],
             // dateTime: DateTime(2022, DateTime.december, 13, 15, 17, 18),
-            // isLive: false,
-            // markingColor: _markingColor,
-            // hourHandColor: _hourHandColor,
-            dialBorderWidthFactor: _dialBorderWidthFactor,
+            isKeepTime: _isKeepTime,
+            dialBorderWidthFactor: 0.1, //_dialBorderWidthFactor,
+/*
             child: Center(
               child: ElevatedButton(
                 onPressed: () {
-                  // clockKey.currentState?.isLive = !clockKey.currentState!.isLive;
-                  clockKey.currentState?.dateTime = DateTime(2022, DateTime.december, 13, 15, 17, 18);
+                  clockKey.currentState?.isKeepTime = !clockKey.currentState!.isKeepTime;
+                  // clockKey.currentState?.dateTime = DateTime(2022, DateTime.december, 13, 15, 17, 18);
                   // setState(() {
                   //   _dialBorderWidthFactor = _random.nextDouble() / 4;
                   //   // _hourHandColor = getRandomColor();
@@ -63,114 +63,12 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
                 child: Text('isLive'),
               ),
             ),
+*/
             // hourHandColor: Colors.red,
             // minuteHandColor: Colors.green,
             // secondHandColor: Colors.blue,
             // centerPointColor: Colors.amberAccent,
           ),
-/*
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                FlutterAnalogClock(
-                  dateTime: DateTime(2022, DateTime.december, 13, 15, 17, 19),
-                  isLive: false,
-                  dialColor: _dialColor,
-                  dialBorderColor: _dialBorderColor,
-                  dialBorderWidthFactor: _dialBorderWidthFactor,
-                  markingColor: _markingColor,
-                  markingRadiusFactor: _markingRadiusFactor,
-                  markingWidthFactor: _markingWidthFactor,
-                  hourNumbers: const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                  hourNumberColor: _hourNumberColor,
-                  hourNumberSizeFactor: _hourNumberSizeFactor,
-                  hourNumberRadiusFactor: 1,
-                  hourHandColor: _hourHandColor,
-                  minuteHandColor: _minuteHandColor,
-                  secondHandColor: _secondHandColor,
-                  hourHandWidthFactor: _hourHandWidthFactor,
-                  hourHandLengthFactor: _hourHandLengthFactor,
-                  minuteHandWidthFactor: _minuteHandWidthFactor,
-                  minuteHandLengthFactor: _minuteHandLengthFactor,
-                  secondHandWidthFactor: _secondHandWidthFactor,
-                  secondHandLengthFactor: _secondHandLengthFactor,
-                ),
-                Wrap(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => setState(() => _dialColor = getRandomColor()),
-                      child: const Text('Dial color'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _dialBorderColor = getRandomColor()),
-                      child: const Text('Border color'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _dialBorderWidthFactor = _random.nextDouble()),
-                      child: const Text('Border factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _hourNumberColor = getRandomColor()),
-                      child: const Text('Hour Number color'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _hourNumberSizeFactor = _random.nextDouble()),
-                      child: const Text('Hour Number factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _markingColor = getRandomColor()),
-                      child: const Text('Markings color'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _markingRadiusFactor = _random.nextDouble()),
-                      child: const Text('Marking radius factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _markingWidthFactor = _random.nextDouble()),
-                      child: const Text('Marking width factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _hourHandColor = getRandomColor()),
-                      child: const Text('Hour hand color'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _minuteHandColor = getRandomColor()),
-                      child: const Text('Minute hand color'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _secondHandColor = getRandomColor()),
-                      child: const Text('Second hand color'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _hourHandWidthFactor = _random.nextDouble()),
-                      child: const Text('Hour hand width factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _hourHandLengthFactor = _random.nextDouble()),
-                      child: const Text('Hour hand length factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _minuteHandWidthFactor = _random.nextDouble()),
-                      child: const Text('Minute hand width factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _minuteHandLengthFactor = _random.nextDouble()),
-                      child: const Text('Minute hand length factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _secondHandWidthFactor = _random.nextDouble()),
-                      child: const Text('Second hand width factor'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => setState(() => _secondHandLengthFactor = _random.nextDouble()),
-                      child: const Text('Second hand length factor'),
-                    ),
-                  ]
-                ),
-              ],
-            ),
-          ),
-*/
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'analog_clock_listener.dart';
 import 'analog_clock_util.dart';
 
 class DialPainter extends CustomPainter {
+  static const int hourNumbersLength = 12;
   final AnalogClockListener listener;
   final Color? dialColor;
   final Color? dialBorderColor;
@@ -30,7 +31,9 @@ class DialPainter extends CustomPainter {
     this.hourNumberColor,
     required this.hourNumberSizeFactor,
     required this.hourNumberRadiusFactor,
-  }) : super(repaint: listener);
+  }) :  assert(hourNumbers == null || hourNumbers.length == 0 || hourNumbers.length == hourNumbersLength),
+        assert(dialBorderWidthFactor >= 0.0 && dialBorderWidthFactor < 1.0),
+        super(repaint: listener);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -124,9 +127,9 @@ class DialPainter extends CustomPainter {
       return;
     }
     double fontSize = radius/4 * hourNumberSizeFactor;
-    for(int i=0; i<hourNumbers!.length; i++) {
+    for(int i=0; i<hourNumbersLength; i++) {
       int hourNumberIndex = i + 2;
-      if(hourNumberIndex >= hourNumbers!.length) hourNumberIndex -= hourNumbers!.length;
+      if(hourNumberIndex >= hourNumbersLength) hourNumberIndex -= hourNumbersLength;
       final textPainter = TextPainter(
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr,

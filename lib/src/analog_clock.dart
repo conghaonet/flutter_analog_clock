@@ -8,7 +8,7 @@ import 'analog_clock_listener.dart';
 
 /// A analog clock.
 class AnalogClock extends StatefulWidget {
-  final DateTime dateTime;
+  final DateTime? dateTime;
   final bool isKeepTime;
   final Widget? child;
   final Color? dialColor;
@@ -34,7 +34,7 @@ class AnalogClock extends StatefulWidget {
   final double centerPointWidthFactor;
   AnalogClock({
     super.key,
-    DateTime? dateTime,
+    this.dateTime,
     bool? isKeepTime,
     this.child,
     this.dialColor = Colors.white,
@@ -58,8 +58,8 @@ class AnalogClock extends StatefulWidget {
     double? hourNumberRadiusFactor,
     this.centerPointColor = Colors.black,
     double? centerPointWidthFactor,
-  }) :
-        this.dateTime = dateTime ?? DateTime.now(),
+  }) :  assert(hourNumbers == null || hourNumbers.isEmpty || hourNumbers.length == 12),
+        assert(dialBorderWidthFactor == null || (dialBorderWidthFactor >= 0.0 && dialBorderWidthFactor < 1.0)),
         this.isKeepTime = isKeepTime ?? true,
         this.dialBorderWidthFactor = dialBorderWidthFactor ?? 0.0,
         this.markingRadiusFactor = markingRadiusFactor ?? 1.0,
@@ -157,7 +157,7 @@ class AnalogClockState extends State<AnalogClock> {
   @override
   void initState() {
     super.initState();
-    _dateTime = widget.dateTime;
+    _dateTime = widget.dateTime ?? DateTime.now();
     _isKeepTime = widget.isKeepTime;
     _startOrStopTimer();
   }
