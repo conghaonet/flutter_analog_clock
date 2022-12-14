@@ -9,7 +9,7 @@ import 'analog_clock_listener.dart';
 /// A analog clock.
 class AnalogClock extends StatefulWidget {
   final DateTime dateTime;
-  final bool isLive;
+  final bool isKeepTime;
   final Widget? child;
   final Color? dialColor;
   final Color? dialBorderColor;
@@ -35,7 +35,7 @@ class AnalogClock extends StatefulWidget {
   AnalogClock({
     super.key,
     DateTime? dateTime,
-    bool? isLive,
+    bool? isKeepTime,
     this.child,
     this.dialColor = Colors.white,
     this.dialBorderColor = Colors.black,
@@ -60,7 +60,7 @@ class AnalogClock extends StatefulWidget {
     double? centerPointWidthFactor,
   }) :
         this.dateTime = dateTime ?? DateTime.now(),
-        this.isLive = isLive ?? true,
+        this.isKeepTime = isKeepTime ?? true,
         this.dialBorderWidthFactor = dialBorderWidthFactor ?? 0.0,
         this.markingRadiusFactor = markingRadiusFactor ?? 1.0,
         this.markingWidthFactor = markingWidthFactor ?? 1.0,
@@ -77,7 +77,7 @@ class AnalogClock extends StatefulWidget {
   AnalogClock.dark({
     Key? key,
     DateTime? dateTime,
-    bool? isLive,
+    bool? isKeepTime,
     Widget? child,
     Color? dialColor = Colors.black,
     Color? dialBorderColor = Colors.black,
@@ -103,7 +103,7 @@ class AnalogClock extends StatefulWidget {
   }) : this(
     key: key,
     dateTime: dateTime,
-    isLive: isLive,
+    isKeepTime: isKeepTime,
     child: child,
     dialColor: dialColor,
     dialBorderColor: dialBorderColor,
@@ -147,10 +147,10 @@ class AnalogClockState extends State<AnalogClock> {
     }
   }
 
-  late bool _isLive;
-  bool get isLive => _isLive;
-  set isLive(bool value) {
-    _isLive = value;
+  late bool _isKeepTime;
+  bool get isKeepTime => _isKeepTime;
+  set isKeepTime(bool value) {
+    _isKeepTime = value;
     _startOrStopTimer();
   }
 
@@ -158,12 +158,12 @@ class AnalogClockState extends State<AnalogClock> {
   void initState() {
     super.initState();
     _dateTime = widget.dateTime;
-    _isLive = widget.isLive;
+    _isKeepTime = widget.isKeepTime;
     _startOrStopTimer();
   }
 
   void _startOrStopTimer() {
-    if(_isLive) {
+    if(_isKeepTime) {
       if(_timer?.isActive != true) {
         _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
           _dateTime = _dateTime.add(Duration(seconds: 1));
