@@ -19,7 +19,6 @@ class AnalogClock extends StatefulWidget {
   final double markingWidthFactor;
   final List<String>? hourNumbers;
   final Color? hourNumberColor;
-
   final Color? hourHandColor;
   final Color? minuteHandColor;
   final Color? secondHandColor;
@@ -29,12 +28,10 @@ class AnalogClock extends StatefulWidget {
   final double hourHandLengthFactor;
   final double minuteHandLengthFactor;
   final double secondHandLengthFactor;
-
   final double hourNumberSizeFactor;
   final double hourNumberRadiusFactor;
   final Color? centerPointColor;
   final double centerPointWidthFactor;
-
   AnalogClock({
     super.key,
     DateTime? dateTime,
@@ -88,9 +85,8 @@ class AnalogClock extends StatefulWidget {
     Color? markingColor = Colors.grey,
     double? markingRadiusFactor,
     double? markingWidthFactor,
-    List<String>? hourNumbers,
+    List<String>? hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
     Color? hourNumberColor = Colors.grey,
-
     Color? hourHandColor = Colors.grey,
     Color? minuteHandColor = Colors.grey,
     Color? secondHandColor = Colors.grey,
@@ -100,7 +96,6 @@ class AnalogClock extends StatefulWidget {
     double? hourHandLengthFactor,
     double? minuteHandLengthFactor,
     double? secondHandLengthFactor,
-
     double? hourNumberSizeFactor,
     double? hourNumberRadiusFactor,
     Color? centerPointColor = Colors.grey,
@@ -146,14 +141,14 @@ class _AnalogClockState extends State<AnalogClock> {
   void initState() {
     super.initState();
     _dateTime = widget.dateTime;
-    _timer = widget.isLive
-        ? Timer.periodic(Duration(seconds: 1), (Timer timer) {
-      _dateTime = _dateTime.add(Duration(seconds: 1));
-      if (mounted) {
-        setState(() {});
-      }
-    })
-        : null;
+    if(widget.isLive) {
+      _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+        _dateTime = _dateTime.add(Duration(seconds: 1));
+        if (mounted) {
+          setState(() {});
+        }
+      });
+    }
   }
 
   @override
