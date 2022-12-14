@@ -129,25 +129,51 @@ class AnalogClock extends StatefulWidget {
   );
 
   @override
-  State<AnalogClock> createState() => _AnalogClockState();
+  State<AnalogClock> createState() => AnalogClockState();
 }
 
-class _AnalogClockState extends State<AnalogClock> {
-  Timer? _timer;
-  late DateTime _dateTime;
+class AnalogClockState extends State<AnalogClock> {
   AnalogClockListener _listener = AnalogClockListener();
+  Timer? _timer;
+
+  late DateTime _dateTime;
+  DateTime get dateTime => _dateTime;
+  set dateTime(DateTime value) {
+    if(_dateTime != value) {
+      _timer?.cancel();
+      _dateTime = value;
+      setState(() {});
+      _startOrStopTimer();
+    }
+  }
+
+  late bool _isLive;
+  bool get isLive => _isLive;
+  set isLive(bool value) {
+    _isLive = value;
+    _startOrStopTimer();
+  }
 
   @override
   void initState() {
     super.initState();
     _dateTime = widget.dateTime;
-    if(widget.isLive) {
-      _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
-        _dateTime = _dateTime.add(Duration(seconds: 1));
-        if (mounted) {
-          setState(() {});
-        }
-      });
+    _isLive = widget.isLive;
+    _startOrStopTimer();
+  }
+
+  void _startOrStopTimer() {
+    if(_isLive) {
+      if(_timer?.isActive != true) {
+        _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+          _dateTime = _dateTime.add(Duration(seconds: 1));
+          if (mounted) {
+            setState(() {});
+          }
+        });
+      }
+    } else {
+      _timer?.cancel();
     }
   }
 

@@ -125,9 +125,6 @@ class HandPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant HandPainter oldDelegate) {
-    return oldDelegate.listener.hourNumberRadius != listener.hourNumberRadius
-        || oldDelegate.dateTime != dateTime
-        || oldDelegate.hourHandColor != hourHandColor
-    ;
+    return oldDelegate.dateTime != dateTime;
   }
 }

@@ -10,9 +10,11 @@ class AnalogClockDemo extends StatefulWidget {
 }
 
 class _AnalogClockDemoState extends State<AnalogClockDemo> {
+  bool _clockIsLive = false;
+  DateTime _dateTime = DateTime.now();
   Color? _dialColor;
   Color? _dialBorderColor;
-  double? _dialBorderWidthFactor;
+  double? _dialBorderWidthFactor = 0.01;
   Color? _markingColor;
   double? _markingRadiusFactor;
   double? _markingWidthFactor;
@@ -29,6 +31,7 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   double? _secondHandLengthFactor;
 
   final math.Random _random = math.Random();
+  final GlobalKey<AnalogClockState> clockKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +39,30 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
       body: Container(
         color: Colors.grey,
         child: SafeArea(
-          child: AnalogClock.dark(
+          child: AnalogClock(
+            key: clockKey,
+            dateTime: _dateTime,
             // dateTime: DateTime(2022, DateTime.december, 13, 15, 17, 18),
             // isLive: false,
+            // markingColor: _markingColor,
+            // hourHandColor: _hourHandColor,
+            dialBorderWidthFactor: _dialBorderWidthFactor,
+            child: Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  // clockKey.currentState?.isLive = !clockKey.currentState!.isLive;
+                  clockKey.currentState?.dateTime = DateTime(2022, DateTime.december, 13, 15, 17, 18);
+                  // setState(() {
+                  //   _dialBorderWidthFactor = _random.nextDouble() / 4;
+                  //   // _hourHandColor = getRandomColor();
+                  //   _dateTime = _dateTime.add(const Duration(hours: 1));
+                  //   // _hourHandColor = Colors.red;
+                  //   // _clockIsLive = !_clockIsLive;
+                  // });
+                },
+                child: Text('isLive'),
+              ),
+            ),
             // hourHandColor: Colors.red,
             // minuteHandColor: Colors.green,
             // secondHandColor: Colors.blue,
@@ -154,82 +178,4 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
 
   Color getRandomColor() => Color.fromARGB(255, _random.nextInt(256), _random.nextInt(256), _random.nextInt(256));
 
-}
-
-Widget buildClock1() {
-  return AnalogClock();
-}
-
-Widget buildClock2() {
-  DateTime dateTime = DateTime.now();
-  dateTime = dateTime.add(const Duration(hours: 8));
-  return AnalogClock.dark(
-    dateTime: dateTime,
-    child: const Center(
-      child: Padding(
-        padding: EdgeInsets.only(top: 100),
-        child: Text(
-          'GMT + 8',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget buildClock3() {
-  DateTime dateTime = DateTime.now();
-  dateTime = dateTime.add(const Duration(hours: -8));
-  return AnalogClock(
-    dateTime: dateTime,
-    dialColor: Colors.green,
-    hourHandColor: Colors.red,
-    minuteHandColor: Colors.purple,
-    secondHandColor: Colors.blue.shade200,
-    dialBorderColor: Colors.green.shade700,
-    markingColor: Colors.white,
-    centerPointColor: Colors.yellow,
-    child: const Center(
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 100),
-        child: Text(
-          'GMT - 8',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget buildClock4() {
-  return AnalogClock(
-    hourNumbers: const ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
-    dialColor: Colors.yellow,
-    hourHandColor: Colors.red,
-    minuteHandColor: Colors.green,
-    markingColor: Colors.green,
-    hourNumberColor: Colors.blue,
-    centerPointColor: Colors.white,
-  );
-}
-
-Widget buildClock5() {
-  return AnalogClock(
-    dialColor: Colors.blue,
-    hourHandColor: Colors.white,
-    centerPointColor: Colors.white,
-  );
-}
-
-Widget buildClock6() {
-  return AnalogClock(
-    hourNumbers: const ['', '', '3', '', '', '6', '', '', '9', '', '', '12'],
-    dialColor: Colors.red,
-    hourHandColor: Colors.white,
-    minuteHandColor: Colors.white,
-    secondHandColor: Colors.white,
-    centerPointColor: Colors.white,
-    dialBorderColor: Colors.red.shade700,
-    markingColor: Colors.blue.shade900,
-  );
 }
