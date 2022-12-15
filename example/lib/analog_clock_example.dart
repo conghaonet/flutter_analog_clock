@@ -12,13 +12,17 @@ class AnalogClockDemo extends StatefulWidget {
 }
 
 class _AnalogClockDemoState extends State<AnalogClockDemo> {
+  static const List<String> hourNumberTemplate1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  static const List<String> hourNumberTemplate2 = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+  static const List<String> hourNumberTemplate3 = ['', '', '3', '', '', '6', '', '', '9', '', '', '12'];
+
   Color? _dialColor = Colors.white;
   Color? _dialBorderColor = Colors.black;
   double? _dialBorderWidthFactor = 0.01;
   Color? _markingColor = Colors.black;
   double? _markingRadiusFactor;
   double? _markingWidthFactor;
-  List<String> _hourNumbers = const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  List<String> _hourNumbers = hourNumberTemplate1;
   Color? _hourNumberColor = Colors.black;
   double? _hourNumberSizeFactor;
   double? _hourNumberRadiusFactor;
@@ -246,7 +250,7 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Row(
             children: [
-              const Expanded(flex: 1, child: Text('Keep time:    ')),
+              const Expanded(flex: 1, child: Text('Keep time:')),
               ToggleButtons(
                 isSelected: _analogClockKey.currentState?.isKeepTime ?? true ? [true, false] : [false, true],
                 children: const [
@@ -355,32 +359,18 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
             Expanded(
               flex: 4,
               child: Column(
-                children: [
-                  RadioListTile(
+                mainAxisSize: MainAxisSize.min,
+                children: [hourNumberTemplate1, hourNumberTemplate2, hourNumberTemplate3].map((element) {
+                  return RadioListTile(
+                    dense: true,
                     contentPadding: EdgeInsets.zero,
-                    value: const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                    value: element,
                     groupValue: _hourNumbers,
                     onChanged: onHourNumberChanged,
-                    title: const Text('1,2,3,4,5,6,7,8,9,10,11,12', maxLines: 1, overflow: TextOverflow.ellipsis,) ,
-                    selected: _hourNumbers == const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                  ),
-                  RadioListTile(
-                    contentPadding: EdgeInsets.zero,
-                    value: const ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
-                    groupValue: _hourNumbers,
-                    onChanged: onHourNumberChanged,
-                    title: const Text('I,II,III,IV,V,VI,VII,VIII,IX,X,XI,XII', maxLines: 1, overflow: TextOverflow.ellipsis,),
-                    selected: _hourNumbers == const ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
-                  ),
-                  RadioListTile(
-                    contentPadding: EdgeInsets.zero,
-                    value: const ['', '', '3', '', '', '6', '', '', '9', '', '', '12'],
-                    groupValue: _hourNumbers,
-                    onChanged: onHourNumberChanged,
-                    title: const Text(',,3,,,6,,,9,,,12', maxLines: 1, overflow: TextOverflow.ellipsis,) ,
-                    selected: _hourNumbers == const ['', '', '3', '', '', '6', '', '', '9', '', '', '12'],
-                  ),
-                ],
+                    title: Text(element.toString().replaceAll(' ', ''), maxLines: 1, overflow: TextOverflow.ellipsis,) ,
+                    selected: _hourNumbers == element,
+                  );
+                }).toList(growable: false),
               ),
             ),
           ],
@@ -391,75 +381,52 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   Widget _buildHandSetting() {
     return Column(
       children: [
-        Row(
-          children: [
-            const Expanded(flex: 1, child: Text('Hour:')),
-            Expanded(flex: 4, child: _buildColorPicker(PartColor.hourHand)),
-          ],
-        ),
-        const SizedBox(height: 8,),
-        Row(
-          children: [
-            const Expanded(flex: 1, child: Text('Minute:')),
-            Expanded(flex: 4, child: _buildColorPicker(PartColor.minuteHand)),
-          ],
-        ),
-        const SizedBox(height: 8,),
-        Row(
-          children: [
-            const Expanded(flex: 1, child: Text('Second:')),
-            Expanded(flex: 4, child: _buildColorPicker(PartColor.secondHand)),
-          ],
-        ),
-        const SizedBox(height: 8,),
-        Row(
-          children: [
-            const Expanded(flex: 1, child: Text('Center:')),
-            Expanded(flex: 4, child: _buildColorPicker(PartColor.centerPoint)),
-          ],
-        ),
-        Row(
-          children: [
-            const Expanded(flex: 3, child: Text('Hour width:')),
-            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.hourWidth)),
-          ],
-        ),
-        Row(
-          children: [
-            const Expanded(flex: 3, child: Text('Hour length:')),
-            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.hourLength)),
-          ],
-        ),
-        Row(
-          children: [
-            const Expanded(flex: 3, child: Text('Minute width:')),
-            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.minuteWidth)),
-          ],
-        ),
-        Row(
-          children: [
-            const Expanded(flex: 3, child: Text('Minute length:')),
-            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.minuteLength)),
-          ],
-        ),
-        Row(
-          children: [
-            const Expanded(flex: 3, child: Text('Second width:')),
-            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.secondWidth)),
-          ],
-        ),
-        Row(
-          children: [
-            const Expanded(flex: 3, child: Text('Second length:')),
-            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.secondLength)),
-          ],
-        ),
-        Row(
-          children: [
-            const Expanded(flex: 3, child: Text('Center point:')),
-            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.centerPointWidth)),
-          ],
-        ),
+        ...[PartColor.hourHand, PartColor.minuteHand, PartColor.secondHand, PartColor.centerPoint].map((element) {
+          String label = '';
+          if(PartColor.hourHand == element) {
+            label = 'Hour:';
+          } else if(PartColor.minuteHand == element) {
+            label = 'Minute:';
+          } else if(PartColor.secondHand == element) {
+            label = 'Second:';
+          } else if(PartColor.centerPoint == element) {
+            label = 'Center:';
+          }
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Row(
+              children: [
+                Expanded(flex: 1, child: Text(label)),
+                Expanded(flex: 4, child: _buildColorPicker(element)),
+              ],
+            ),
+          );
+        }).toList(growable: false),
+        ...[PartFactor.hourWidth, PartFactor.hourLength, PartFactor.minuteWidth, PartFactor.minuteLength,
+          PartFactor.secondWidth, PartFactor.secondLength, PartFactor.centerPointWidth].map((element) {
+          String label = '';
+          if(PartFactor.hourWidth == element) {
+            label = 'Hour width:';
+          } else if(PartFactor.hourLength == element) {
+            label = 'Hour length:';
+          } else if(PartFactor.minuteWidth == element) {
+            label = 'Minute width:';
+          } else if(PartFactor.minuteLength == element) {
+            label = 'Minute length:';
+          } else if(PartFactor.secondWidth == element) {
+            label = 'Second width:';
+          } else if(PartFactor.secondLength == element) {
+            label = 'Second length:';
+          } else if(PartFactor.centerPointWidth == element) {
+            label = 'Center point:';
+          }
+          return Row(
+            children: [
+              Expanded(flex: 3, child: Text(label)),
+              Expanded(flex: 7, child: _buildFactorSlider(element)),
+            ],
+          );
+        }).toList(growable: false),
       ],
     );
   }
@@ -472,89 +439,36 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
           return InkWell(
             onTap: () {
               setState(() {
-                switch(partColor) {
-                  case PartColor.dial:
-                    _dialColor = colors[index];
-                    break;
-                  case PartColor.dialBorder:
-                    _dialBorderColor = colors[index];
-                    break;
-                  case PartColor.marking:
-                    _markingColor = colors[index];
-                    break;
-                  case PartColor.hourNumber:
-                    _hourNumberColor = colors[index];
-                    break;
-                  case PartColor.hourHand:
-                    _hourHandColor = colors[index];
-                    break;
-                  case PartColor.minuteHand:
-                    _minuteHandColor = colors[index];
-                    break;
-                  case PartColor.secondHand:
-                    _secondHandColor = colors[index];
-                    break;
-                  case PartColor.centerPoint:
-                    _centerPointColor = colors[index];
-                    break;
-                  default:
-                    break;
+                if(PartColor.dial == partColor) {
+                  _dialColor = colors[index];
+                } else if(PartColor.dialBorder == partColor) {
+                  _dialBorderColor = colors[index];
+                } else if(PartColor.marking == partColor) {
+                  _markingColor = colors[index];
+                } else if(PartColor.hourNumber == partColor) {
+                  _hourNumberColor = colors[index];
+                } else if(PartColor.hourHand == partColor) {
+                  _hourHandColor = colors[index];
+                } else if(PartColor.minuteHand == partColor) {
+                  _minuteHandColor = colors[index];
+                } else if(PartColor.secondHand == partColor) {
+                  _secondHandColor = colors[index];
+                } else if(PartColor.centerPoint == partColor) {
+                  _centerPointColor = colors[index];
                 }
               });
             },
             child: Container(
               width: 40,
               height: 40,
-              color: colors[index],
+              decoration: BoxDecoration(
+                color: colors[index],
+              ),
             ),
           );
         },),
       ),
     );
-    // return Wrap(
-    //   children: List.generate(colors.length, growable: false, (index) {
-    //     return InkWell(
-    //       onTap: () {
-    //         setState(() {
-    //           switch(partColor) {
-    //             case PartColor.dial:
-    //               _dialColor = colors[index];
-    //               break;
-    //             case PartColor.dialBorder:
-    //               _dialBorderColor = colors[index];
-    //               break;
-    //             case PartColor.marking:
-    //               _markingColor = colors[index];
-    //               break;
-    //             case PartColor.hourNumber:
-    //               _hourNumberColor = colors[index];
-    //               break;
-    //             case PartColor.hourHand:
-    //               _hourHandColor = colors[index];
-    //               break;
-    //             case PartColor.minuteHand:
-    //               _minuteHandColor = colors[index];
-    //               break;
-    //             case PartColor.secondHand:
-    //               _secondHandColor = colors[index];
-    //               break;
-    //             case PartColor.centerPoint:
-    //               _centerPointColor = colors[index];
-    //               break;
-    //             default:
-    //               break;
-    //           }
-    //         });
-    //       },
-    //       child: Container(
-    //         width: 40,
-    //         height: 40,
-    //         color: colors[index],
-    //       ),
-    //     );
-    //   },
-    //   ),
-    // );
   }
 
   Widget _buildFactorSlider(PartFactor partFactor) {
