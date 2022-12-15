@@ -10,8 +10,6 @@ class AnalogClockDemo extends StatefulWidget {
 }
 
 class _AnalogClockDemoState extends State<AnalogClockDemo> {
-  bool _isKeepTime = false;
-  DateTime? _dateTime;
   Color? _dialColor = Colors.white;
   Color? _dialBorderColor = Colors.black;
   double? _dialBorderWidthFactor = 0.01;
@@ -50,8 +48,6 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
               color: Colors.grey.shade300,
               child: AnalogClock(
                 key: clockKey,
-                dateTime: _dateTime,
-                isKeepTime: _isKeepTime,
                 dialColor: _dialColor,
                 dialBorderColor: _dialBorderColor,
                 dialBorderWidthFactor: _dialBorderWidthFactor,
@@ -81,20 +77,6 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
                   padding: const EdgeInsets.all(8.0),
                   child: _buildSettingGroup(),
                 )
-/*
-                Column(
-                  children: [
-                    _buildFactorSlider(),
-                    _buildColorPicker(),
-                    ElevatedButton(
-                      onPressed: () {
-                        clockKey.currentState?.isKeepTime = !clockKey.currentState!.isKeepTime;
-                      },
-                      child: Text('isLive'),
-                    ),
-                  ],
-                ),
-*/
               ),
             ),
             _buildFooterButtons(),
@@ -134,6 +116,8 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
 
   Widget _buildSettingGroup() {
     switch(_selectedSettingGroup) {
+      case SettingGroup.time:
+        return _buildTimeSetting();
       case SettingGroup.dial:
         return _buildDialSetting();
       case SettingGroup.marking:
@@ -145,6 +129,80 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
       default:
         return const Text('Error!');
     }
+  }
+
+  Widget _buildTimeSetting() {
+    Widget buildTimeSetup(PartColor partColor) {
+      String? label;
+      Duration plusDuration = const Duration();
+      Duration negDuration = const Duration();
+      switch(partColor) {
+        case PartColor.hourHand:
+          label = 'Hour:';
+          plusDuration = const Duration(hours: 1);
+          negDuration = const Duration(hours: -1);
+          break;
+        case PartColor.minuteHand:
+          label = 'Minute:';
+          plusDuration = const Duration(minutes: 1);
+          negDuration = const Duration(minutes: -1);
+          break;
+        case PartColor.secondHand:
+          label = 'Second:';
+          plusDuration = const Duration(seconds: 1);
+          negDuration = const Duration(seconds: -1);
+          break;
+        default:
+          break;
+      }
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Row(
+          children: [
+            Expanded(child: Text(label ?? 'Error!')),
+            IconButton(
+              onPressed: () {
+                clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(plusDuration);
+              },
+              icon: const Icon(Icons.exposure_plus_1),
+            ),
+            IconButton(
+              onPressed: () {
+                clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(negDuration);
+              },
+              icon: const Icon(Icons.exposure_neg_1),
+            ),
+            const Expanded(flex: 3, child: SizedBox(width: 1,),),
+          ],
+        ),
+      );
+    }
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Row(
+            children: [
+              const Text('Keep time:    '),
+              ToggleButtons(
+                isSelected: clockKey.currentState?.isKeepTime ?? true ? [true, false] : [false, true],
+                children: const [
+                  Icon(Icons.check_circle_outline),
+                  Icon(Icons.block),
+                ],
+                onPressed: (index) {
+                  setState(() {clockKey.currentState?.isKeepTime = index == 0;});
+                },
+              ),
+            ],
+          ),
+        ),
+        buildTimeSetup(PartColor.hourHand),
+        buildTimeSetup(PartColor.minuteHand),
+        buildTimeSetup(PartColor.secondHand),
+      ],
+
+    );
   }
 
   Widget _buildDialSetting() {
@@ -461,6 +519,7 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
 }
 
 enum SettingGroup {
+  time('Time'),
   dial('Dial'),
   marking('Marking'),
   number('Number'),
