@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -131,8 +133,32 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
     }
   }
 
+  Timer? _longPressTimer;
+  MaterialStateProperty<Color?>? _hourPlusBackgroundColor;
+  MaterialStateProperty<Color?>? _minutePlusBackgroundColor;
+  MaterialStateProperty<Color?>? _secondPlusBackgroundColor;
+  MaterialStateProperty<Color?>? _hourNegBackgroundColor;
+  MaterialStateProperty<Color?>? _minuteNegBackgroundColor;
+  MaterialStateProperty<Color?>? _secondNegBackgroundColor;
   Widget _buildTimeSetting() {
     Widget buildTimeSetup(PartColor partColor) {
+      MaterialStateProperty<Color?>? plusButtonBackgroundColor;
+      MaterialStateProperty<Color?>? negButtonBackgroundColor;
+      void switchBackgroundColor(MaterialStateProperty<Color?>? value, bool isPlusAction) {
+        switch(partColor) {
+          case PartColor.hourHand:
+            isPlusAction ? _hourPlusBackgroundColor = value : _hourNegBackgroundColor = value;
+            break;
+          case PartColor.minuteHand:
+            isPlusAction ? _minutePlusBackgroundColor = value : _minuteNegBackgroundColor = value;
+            break;
+          case PartColor.secondHand:
+            isPlusAction ? _secondPlusBackgroundColor = value : _secondNegBackgroundColor = value;
+            break;
+          default:
+            break;
+        }
+      }
       String? label;
       Duration plusDuration = const Duration();
       Duration negDuration = const Duration();
@@ -141,16 +167,22 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
           label = 'Hour:';
           plusDuration = const Duration(hours: 1);
           negDuration = const Duration(hours: -1);
+          plusButtonBackgroundColor = _hourPlusBackgroundColor;
+          negButtonBackgroundColor = _hourNegBackgroundColor;
           break;
         case PartColor.minuteHand:
           label = 'Minute:';
           plusDuration = const Duration(minutes: 1);
           negDuration = const Duration(minutes: -1);
+          plusButtonBackgroundColor = _minutePlusBackgroundColor;
+          negButtonBackgroundColor = _minuteNegBackgroundColor;
           break;
         case PartColor.secondHand:
           label = 'Second:';
           plusDuration = const Duration(seconds: 1);
           negDuration = const Duration(seconds: -1);
+          plusButtonBackgroundColor = _secondPlusBackgroundColor;
+          negButtonBackgroundColor = _secondNegBackgroundColor;
           break;
         default:
           break;
@@ -160,17 +192,57 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
         child: Row(
           children: [
             Expanded(child: Text(label ?? 'Error!')),
-            IconButton(
-              onPressed: () {
-                clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(plusDuration);
+            GestureDetector(
+              onLongPressStart: (details) {
+                setState(() {
+                  switchBackgroundColor(MaterialStateProperty.all(Colors.lightBlue.shade100), true);
+                });
+                _longPressTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+                  clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(plusDuration);
+                });
               },
-              icon: const Icon(Icons.exposure_plus_1),
+              onLongPressEnd: (details) {
+                setState(() {
+                  switchBackgroundColor(null, true);
+                });
+                _longPressTimer?.cancel();
+              },
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(Colors.lightBlue.shade100),
+                  backgroundColor: plusButtonBackgroundColor,
+                ),
+                onPressed: () {
+                  clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(plusDuration);
+                },
+                child: const Icon(Icons.exposure_plus_1),
+              ),
             ),
-            IconButton(
-              onPressed: () {
-                clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(negDuration);
+            GestureDetector(
+              onLongPressStart: (details) {
+                setState(() {
+                  switchBackgroundColor(MaterialStateProperty.all(Colors.lightBlue.shade100), false);
+                });
+                _longPressTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+                  clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(negDuration);
+                });
               },
-              icon: const Icon(Icons.exposure_neg_1),
+              onLongPressEnd: (details) {
+                setState(() {
+                  switchBackgroundColor(null, false);
+                });
+                _longPressTimer?.cancel();
+              },
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(Colors.lightBlue.shade100),
+                  backgroundColor: negButtonBackgroundColor,
+                ),
+                onPressed: () {
+                  clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(negDuration);
+                },
+                child: const Icon(Icons.exposure_neg_1),
+              ),
             ),
             const Expanded(flex: 3, child: SizedBox(width: 1,),),
           ],
