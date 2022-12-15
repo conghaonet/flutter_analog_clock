@@ -34,10 +34,12 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   double? _secondHandLengthFactor;
   double? _centerPointWidthFactor;
   final math.Random _random = math.Random();
-  final GlobalKey<AnalogClockState> clockKey = GlobalKey();
+  final GlobalKey<AnalogClockState> _analogClockKey = GlobalKey();
   static const List<Color> colors = [
-    Colors.black, Colors.white, Colors.red,
-    Colors.green, Colors.blue, Colors.yellow, Colors.purple,
+    Colors.black, Colors.white, Colors.red, Colors.green, Colors.blue,
+    Colors.teal, Colors.purple, Colors.pink, Colors.orange, Colors.lime,
+    Colors.indigo, Colors.brown, Colors.cyan, Colors.yellow, Colors.amber,
+
   ];
   SettingGroup _selectedSettingGroup = SettingGroup.values[0];
   @override
@@ -49,7 +51,7 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
             Container(
               color: Colors.grey.shade300,
               child: AnalogClock(
-                key: clockKey,
+                key: _analogClockKey,
                 dialColor: _dialColor,
                 dialBorderColor: _dialBorderColor,
                 dialBorderWidthFactor: _dialBorderWidthFactor,
@@ -191,20 +193,16 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Row(
           children: [
-            Expanded(child: Text(label ?? 'Error!')),
+            Expanded(flex: 1, child: Text(label ?? 'Error!')),
             GestureDetector(
               onLongPressStart: (details) {
-                setState(() {
-                  switchBackgroundColor(MaterialStateProperty.all(Colors.lightBlue.shade100), true);
-                });
+                setState(() => switchBackgroundColor(MaterialStateProperty.all(Colors.lightBlue.shade100), true));
                 _longPressTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
-                  clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(plusDuration);
+                  _analogClockKey.currentState!.dateTime = _analogClockKey.currentState!.dateTime.add(plusDuration);
                 });
               },
               onLongPressEnd: (details) {
-                setState(() {
-                  switchBackgroundColor(null, true);
-                });
+                setState(() => switchBackgroundColor(null, true));
                 _longPressTimer?.cancel();
               },
               child: ElevatedButton(
@@ -212,25 +210,20 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
                   overlayColor: MaterialStateProperty.all(Colors.lightBlue.shade100),
                   backgroundColor: plusButtonBackgroundColor,
                 ),
-                onPressed: () {
-                  clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(plusDuration);
-                },
+                onPressed: () => _analogClockKey.currentState!.dateTime = _analogClockKey.currentState!.dateTime.add(plusDuration),
                 child: const Icon(Icons.exposure_plus_1),
               ),
             ),
+            const SizedBox(width: 8,),
             GestureDetector(
               onLongPressStart: (details) {
-                setState(() {
-                  switchBackgroundColor(MaterialStateProperty.all(Colors.lightBlue.shade100), false);
-                });
+                setState(() => switchBackgroundColor(MaterialStateProperty.all(Colors.lightBlue.shade100), false));
                 _longPressTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
-                  clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(negDuration);
+                  _analogClockKey.currentState!.dateTime = _analogClockKey.currentState!.dateTime.add(negDuration);
                 });
               },
               onLongPressEnd: (details) {
-                setState(() {
-                  switchBackgroundColor(null, false);
-                });
+                setState(() {switchBackgroundColor(null, false);});
                 _longPressTimer?.cancel();
               },
               child: ElevatedButton(
@@ -238,13 +231,11 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
                   overlayColor: MaterialStateProperty.all(Colors.lightBlue.shade100),
                   backgroundColor: negButtonBackgroundColor,
                 ),
-                onPressed: () {
-                  clockKey.currentState!.dateTime = clockKey.currentState!.dateTime.add(negDuration);
-                },
+                onPressed: () => _analogClockKey.currentState!.dateTime = _analogClockKey.currentState!.dateTime.add(negDuration),
                 child: const Icon(Icons.exposure_neg_1),
               ),
             ),
-            const Expanded(flex: 3, child: SizedBox(width: 1,),),
+            const Expanded(flex: 2, child: SizedBox(width: 1,),),
           ],
         ),
       );
@@ -255,17 +246,18 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Row(
             children: [
-              const Text('Keep time:    '),
+              const Expanded(flex: 1, child: Text('Keep time:    ')),
               ToggleButtons(
-                isSelected: clockKey.currentState?.isKeepTime ?? true ? [true, false] : [false, true],
+                isSelected: _analogClockKey.currentState?.isKeepTime ?? true ? [true, false] : [false, true],
                 children: const [
                   Icon(Icons.check_circle_outline),
                   Icon(Icons.block),
                 ],
                 onPressed: (index) {
-                  setState(() {clockKey.currentState?.isKeepTime = index == 0;});
+                  setState(() {_analogClockKey.currentState?.isKeepTime = index == 0;});
                 },
               ),
+              const Expanded(flex: 2, child: SizedBox(width: 1,),),
             ],
           ),
         ),
@@ -282,21 +274,22 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
       children: [
         Row(
           children: [
-            const Text('Dial: '),
-            Expanded(child: _buildColorPicker(PartColor.dial)),
+            const Expanded(flex: 1, child: Text('Dial:')),
+            Expanded(flex: 4, child: _buildColorPicker(PartColor.dial)),
+
           ],
         ),
         const SizedBox(height: 8,),
         Row(
           children: [
-            const Text('Border: '),
-            Expanded(child: _buildColorPicker(PartColor.dialBorder)),
+            const Expanded(flex: 1, child: Text('Border:')),
+            Expanded(flex: 4, child: _buildColorPicker(PartColor.dialBorder)),
           ],
         ),
         Row(
           children: [
-            const Text('Border: '),
-            _buildFactorSlider(PartFactor.borderWidth),
+            const Text('Border:'),
+            Expanded(flex: 1, child: _buildFactorSlider(PartFactor.borderWidth)),
           ],
         ),
       ],
@@ -307,21 +300,21 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
       children: [
         Row(
           children: [
-            const Text('Mark: '),
-            Expanded(child: _buildColorPicker(PartColor.marking)),
+            const Expanded(flex: 1, child: Text('Marking:')),
+            Expanded(flex: 4, child: _buildColorPicker(PartColor.marking)),
           ],
         ),
         const SizedBox(height: 8,),
         Row(
           children: [
-            const Text('Radius: '),
-            _buildFactorSlider(PartFactor.markingRadius),
+            const Expanded(flex: 1, child: Text('Radius:')),
+            Expanded(flex: 5, child: _buildFactorSlider(PartFactor.markingRadius)),
           ],
         ),
         Row(
           children: [
-            const Text('Width: '),
-            _buildFactorSlider(PartFactor.markingWidth),
+            const Expanded(flex: 1, child: Text('Width:')),
+            Expanded(flex: 5, child: _buildFactorSlider(PartFactor.markingWidth)),
           ],
         ),
       ],
@@ -339,27 +332,28 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
       children: [
         Row(
           children: [
-            const Text('Number: '),
-            Expanded(child: _buildColorPicker(PartColor.hourNumber)),
+            const Expanded(flex: 1, child: Text('Number:')),
+            Expanded(flex: 4, child: _buildColorPicker(PartColor.hourNumber)),
           ],
         ),
         const SizedBox(height: 8,),
         Row(
           children: [
-            const Text('Size: '),
-            _buildFactorSlider(PartFactor.numberSize),
+            const Expanded(flex: 1, child: Text('Size:')),
+            Expanded(flex: 5, child: _buildFactorSlider(PartFactor.numberSize)),
           ],
         ),
         Row(
           children: [
-            const Text('Radius: '),
-            _buildFactorSlider(PartFactor.numberRadius),
+            const Expanded(flex: 1, child: Text('Radius:')),
+            Expanded(flex: 5, child: _buildFactorSlider(PartFactor.numberRadius)),
           ],
         ),
         Row(
           children: [
-            const Text('Hour\nnumber: '),
+            const Expanded(flex: 1, child: Text('Hour\nnumber:')),
             Expanded(
+              flex: 4,
               child: Column(
                 children: [
                   RadioListTile(
@@ -399,71 +393,71 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
       children: [
         Row(
           children: [
-            const Text('Hour: '),
-            Expanded(child: _buildColorPicker(PartColor.hourHand)),
+            const Expanded(flex: 1, child: Text('Hour:')),
+            Expanded(flex: 4, child: _buildColorPicker(PartColor.hourHand)),
           ],
         ),
         const SizedBox(height: 8,),
         Row(
           children: [
-            const Text('Minute: '),
-            Expanded(child: _buildColorPicker(PartColor.minuteHand)),
+            const Expanded(flex: 1, child: Text('Minute:')),
+            Expanded(flex: 4, child: _buildColorPicker(PartColor.minuteHand)),
           ],
         ),
         const SizedBox(height: 8,),
         Row(
           children: [
-            const Text('Second: '),
-            Expanded(child: _buildColorPicker(PartColor.secondHand)),
+            const Expanded(flex: 1, child: Text('Second:')),
+            Expanded(flex: 4, child: _buildColorPicker(PartColor.secondHand)),
           ],
         ),
         const SizedBox(height: 8,),
         Row(
           children: [
-            const Text('Center: '),
-            Expanded(child: _buildColorPicker(PartColor.centerPoint)),
+            const Expanded(flex: 1, child: Text('Center:')),
+            Expanded(flex: 4, child: _buildColorPicker(PartColor.centerPoint)),
           ],
         ),
         Row(
           children: [
-            const Text('Hour width: '),
-            _buildFactorSlider(PartFactor.hourWidth),
+            const Expanded(flex: 3, child: Text('Hour width:')),
+            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.hourWidth)),
           ],
         ),
         Row(
           children: [
-            const Text('Hour length: '),
-            _buildFactorSlider(PartFactor.hourLength),
+            const Expanded(flex: 3, child: Text('Hour length:')),
+            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.hourLength)),
           ],
         ),
         Row(
           children: [
-            const Text('Minute width: '),
-            _buildFactorSlider(PartFactor.minuteWidth),
+            const Expanded(flex: 3, child: Text('Minute width:')),
+            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.minuteWidth)),
           ],
         ),
         Row(
           children: [
-            const Text('Minute length: '),
-            _buildFactorSlider(PartFactor.minuteLength),
+            const Expanded(flex: 3, child: Text('Minute length:')),
+            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.minuteLength)),
           ],
         ),
         Row(
           children: [
-            const Text('Second width: '),
-            _buildFactorSlider(PartFactor.secondWidth),
+            const Expanded(flex: 3, child: Text('Second width:')),
+            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.secondWidth)),
           ],
         ),
         Row(
           children: [
-            const Text('Second length: '),
-            _buildFactorSlider(PartFactor.secondLength),
+            const Expanded(flex: 3, child: Text('Second length:')),
+            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.secondLength)),
           ],
         ),
         Row(
           children: [
-            const Text('Center point: '),
-            _buildFactorSlider(PartFactor.centerPointWidth),
+            const Expanded(flex: 3, child: Text('Center point:')),
+            Expanded(flex: 7, child: _buildFactorSlider(PartFactor.centerPointWidth)),
           ],
         ),
       ],
@@ -471,50 +465,96 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   }
 
   Widget _buildColorPicker(PartColor partColor) {
-    return Wrap(
-      children: List.generate(colors.length, growable: false, (index) {
-        return InkWell(
-          onTap: () {
-            setState(() {
-              switch(partColor) {
-                case PartColor.dial:
-                  _dialColor = colors[index];
-                  break;
-                case PartColor.dialBorder:
-                  _dialBorderColor = colors[index];
-                  break;
-                case PartColor.marking:
-                  _markingColor = colors[index];
-                  break;
-                case PartColor.hourNumber:
-                  _hourNumberColor = colors[index];
-                  break;
-                case PartColor.hourHand:
-                  _hourHandColor = colors[index];
-                  break;
-                case PartColor.minuteHand:
-                  _minuteHandColor = colors[index];
-                  break;
-                case PartColor.secondHand:
-                  _secondHandColor = colors[index];
-                  break;
-                case PartColor.centerPoint:
-                  _centerPointColor = colors[index];
-                  break;
-                default:
-                  break;
-              }
-            });
-          },
-          child: Container(
-            width: 40,
-            height: 40,
-            color: colors[index],
-          ),
-        );
-      },
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(colors.length, growable: false, (index) {
+          return InkWell(
+            onTap: () {
+              setState(() {
+                switch(partColor) {
+                  case PartColor.dial:
+                    _dialColor = colors[index];
+                    break;
+                  case PartColor.dialBorder:
+                    _dialBorderColor = colors[index];
+                    break;
+                  case PartColor.marking:
+                    _markingColor = colors[index];
+                    break;
+                  case PartColor.hourNumber:
+                    _hourNumberColor = colors[index];
+                    break;
+                  case PartColor.hourHand:
+                    _hourHandColor = colors[index];
+                    break;
+                  case PartColor.minuteHand:
+                    _minuteHandColor = colors[index];
+                    break;
+                  case PartColor.secondHand:
+                    _secondHandColor = colors[index];
+                    break;
+                  case PartColor.centerPoint:
+                    _centerPointColor = colors[index];
+                    break;
+                  default:
+                    break;
+                }
+              });
+            },
+            child: Container(
+              width: 40,
+              height: 40,
+              color: colors[index],
+            ),
+          );
+        },),
       ),
     );
+    // return Wrap(
+    //   children: List.generate(colors.length, growable: false, (index) {
+    //     return InkWell(
+    //       onTap: () {
+    //         setState(() {
+    //           switch(partColor) {
+    //             case PartColor.dial:
+    //               _dialColor = colors[index];
+    //               break;
+    //             case PartColor.dialBorder:
+    //               _dialBorderColor = colors[index];
+    //               break;
+    //             case PartColor.marking:
+    //               _markingColor = colors[index];
+    //               break;
+    //             case PartColor.hourNumber:
+    //               _hourNumberColor = colors[index];
+    //               break;
+    //             case PartColor.hourHand:
+    //               _hourHandColor = colors[index];
+    //               break;
+    //             case PartColor.minuteHand:
+    //               _minuteHandColor = colors[index];
+    //               break;
+    //             case PartColor.secondHand:
+    //               _secondHandColor = colors[index];
+    //               break;
+    //             case PartColor.centerPoint:
+    //               _centerPointColor = colors[index];
+    //               break;
+    //             default:
+    //               break;
+    //           }
+    //         });
+    //       },
+    //       child: Container(
+    //         width: 40,
+    //         height: 40,
+    //         color: colors[index],
+    //       ),
+    //     );
+    //   },
+    //   ),
+    // );
   }
 
   Widget _buildFactorSlider(PartFactor partFactor) {
@@ -570,20 +610,18 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
       }
     }
     switchValue(false);
-    return Expanded(
-      child: Slider(
-        value: value ?? defaultValue,
-        min: 0,
-        max: maxValue,
-        divisions: 100,
-        label: (value ?? defaultValue).toString(),
-        onChanged: (newValue) {
-          setState(() {
-            value = newValue;
-            switchValue(true);
-          });
-        },
-      ),
+    return Slider(
+      value: value ?? defaultValue,
+      min: 0,
+      max: maxValue,
+      divisions: 100,
+      label: (value ?? defaultValue).toString(),
+      onChanged: (newValue) {
+        setState(() {
+          value = newValue;
+          switchValue(true);
+        });
+      },
     );
   }
 
