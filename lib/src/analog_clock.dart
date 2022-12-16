@@ -8,29 +8,65 @@ import 'analog_clock_listener.dart';
 
 /// A analog clock.
 class AnalogClock extends StatefulWidget {
+  /// If this property is null, then [AnalogClockState._dateTime] value is [DateTime.now()].
   final DateTime? dateTime;
+  /// if true, [AnalogClock] keeps time, default value is true.
   final bool isKeepTime;
   final Widget? child;
+  /// This property is used to set the color of the watch face.
   final Color? dialColor;
+  /// This property is used to set the border color of the watch.
   final Color? dialBorderColor;
+  /// sets the border width to the clock radius multiplied by this factor.
+  /// Must be less than 1.0 and non-negative.
   final double dialBorderWidthFactor;
+  /// This property is used to set the color of the markings on the dial.
   final Color? markingColor;
+  /// sets the radius from the center of the dial to the markings multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double markingRadiusFactor;
+  /// sets marking width multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double markingWidthFactor;
+  /// This property is used to set the text content of the hour markings.
+  /// If this list is not empty or null, then its length must be 12.
   final List<String>? hourNumbers;
+  /// This property is used to set the color of the hour markings.
   final Color? hourNumberColor;
+  /// This property is used to set the color of the hour hand.
   final Color? hourHandColor;
+  /// This property is used to set the color of the minute hand.
   final Color? minuteHandColor;
+  /// This property is used to set the color of the second hand.
   final Color? secondHandColor;
+  /// sets the width of the hour hand multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double hourHandWidthFactor;
+  /// sets the width of the minute hand multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double minuteHandWidthFactor;
+  /// sets the width of the minute second multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double secondHandWidthFactor;
+  /// sets the length of the hour hand multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double hourHandLengthFactor;
+  /// sets the length of the minute hand multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double minuteHandLengthFactor;
+  /// sets the length of the second hand multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double secondHandLengthFactor;
+  /// This property is used to set the font size of the hour markings.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double hourNumberSizeFactor;
+  /// sets the radius from the hour marking to center of dail multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double hourNumberRadiusFactor;
+  /// This property is used to set the color of the center of the watch.
   final Color? centerPointColor;
+  /// sets the width of the center of the watch multiplied by this factor.
+  /// Can be both greater and less than 1.0 but must be non-negative.
   final double centerPointWidthFactor;
   AnalogClock({
     super.key,

@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'analog_clock_listener.dart';
 import 'analog_clock_util.dart';
 
+/// Draw hands and center point
 class HandPainter extends CustomPainter {
   final AnalogClockListener listener;
   final DateTime dateTime;

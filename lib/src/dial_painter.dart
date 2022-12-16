@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'analog_clock_listener.dart';
 import 'analog_clock_util.dart';
 
+/// Draw the dial and markings
 class DialPainter extends CustomPainter {
   static const int hourNumbersLength = 12;
   final AnalogClockListener listener;
