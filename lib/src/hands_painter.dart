@@ -46,7 +46,7 @@ class HandPainter extends CustomPainter {
     if(hourHandLengthFactor > 0.0 && hourHandWidthFactor > 0.0
         && hourHandColor != null && hourHandColor != Colors.transparent) {
       double baseHourLength = listener.hourNumberRadius * 0.75;
-      hourWidth = baseHourLength * 0.08 * hourHandWidthFactor;
+      hourWidth = baseHourLength * 0.09 * hourHandWidthFactor;
       _drawHourHand(
         canvas,
         baseHourLength * hourHandLengthFactor,
