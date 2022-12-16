@@ -38,40 +38,44 @@ class HandPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    double hourWidth = 0, minuteWidth = 0, secondWidth = 0;
+
     // translate to center of clock
     canvas.translate(size.width / 2, size.height / 2);
 
     if(hourHandLengthFactor > 0.0 && hourHandWidthFactor > 0.0
         && hourHandColor != null && hourHandColor != Colors.transparent) {
       double baseHourLength = listener.hourNumberRadius * 0.75;
+      hourWidth = baseHourLength * 0.08 * hourHandWidthFactor;
       _drawHourHand(
         canvas,
         baseHourLength * hourHandLengthFactor,
-        baseHourLength * 0.1 * hourHandWidthFactor,
+        hourWidth,
       );
     }
     if(minuteHandLengthFactor > 0.0 && minuteHandWidthFactor > 0.0
         && minuteHandColor != null && minuteHandColor != Colors.transparent) {
+      minuteWidth = listener.hourNumberRadius * 0.03 * minuteHandWidthFactor;
       _drawMinuteHand(
         canvas,
         listener.hourNumberRadius * minuteHandLengthFactor,
-        listener.hourNumberRadius * 0.03 * minuteHandWidthFactor,
+        minuteWidth,
       );
     }
     if(secondHandLengthFactor > 0.0 && secondHandWidthFactor > 0.0
         && secondHandColor != null && secondHandColor != Colors.transparent) {
+      secondWidth = listener.markingRadius * 0.01 * secondHandWidthFactor;
       _drawSecondHand(
         canvas,
         listener.markingRadius * secondHandLengthFactor,
-        listener.markingRadius * 0.01 * secondHandWidthFactor,
+        secondWidth,
       );
     }
 
     //draw center point
-    if(centerPointColor != null && centerPointColor != Colors.transparent
-        && centerPointWidthFactor > 0.0) {
+    if(centerPointColor != null && centerPointColor != Colors.transparent && centerPointWidthFactor > 0.0) {
       Paint centerPointPaint = Paint()
-        ..strokeWidth = listener.dialRadius * 0.08 * centerPointWidthFactor
+        ..strokeWidth = math.max(hourWidth, math.max(minuteWidth, secondWidth)) * 2.0 * centerPointWidthFactor
         ..strokeCap = StrokeCap.round
         ..color = this.centerPointColor!;
       canvas.drawPoints(PointMode.points, [Offset.zero], centerPointPaint);
@@ -85,6 +89,7 @@ class HandPainter extends CustomPainter {
         math.sin(AnalogClockUtil.getRadians(angle * 30)) * radius
     );
     final hourHandPaint = Paint()
+      ..isAntiAlias = true
       ..color = this.hourHandColor ?? Colors.transparent
       ..strokeWidth = strokeWidth;
     canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
@@ -98,6 +103,7 @@ class HandPainter extends CustomPainter {
         math.sin(AnalogClockUtil.getRadians(angle * 6.0)) * radius
     );
     final hourHandPaint = Paint()
+      ..isAntiAlias = true
       ..color = this.minuteHandColor ?? Colors.transparent
       ..strokeWidth = strokeWidth;
     canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
@@ -111,6 +117,7 @@ class HandPainter extends CustomPainter {
         math.sin(AnalogClockUtil.getRadians(angle * 6.0)) * radius
     );
     final hourHandPaint = Paint()
+      ..isAntiAlias = true
       ..color = this.secondHandColor ?? Colors.transparent
       ..strokeWidth = strokeWidth;
     canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
