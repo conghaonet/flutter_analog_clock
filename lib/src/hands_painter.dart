@@ -43,14 +43,11 @@ class HandPainter extends CustomPainter {
 
     if(hourHandLengthFactor > 0.0 && hourHandWidthFactor > 0.0
         && hourHandColor != null && hourHandColor != Colors.transparent) {
-      double hourRadius = (listener.hourNumberRadius - listener.maxHourNumberSide/1.5) * hourHandLengthFactor;
-      if(listener.maxHourNumberSide <= 0.0) {
-        hourRadius = listener.hourNumberRadius * 0.75 * hourHandLengthFactor;
-      }
+      double baseHourLength = listener.hourNumberRadius * 0.75;
       _drawHourHand(
         canvas,
-        hourRadius,
-        listener.dialRadius * 0.05 * hourHandWidthFactor,
+        baseHourLength * hourHandLengthFactor,
+        baseHourLength * 0.1 * hourHandWidthFactor,
       );
     }
     if(minuteHandLengthFactor > 0.0 && minuteHandWidthFactor > 0.0
@@ -58,19 +55,15 @@ class HandPainter extends CustomPainter {
       _drawMinuteHand(
         canvas,
         listener.hourNumberRadius * minuteHandLengthFactor,
-        listener.dialRadius * 0.02 * minuteHandWidthFactor,
+        listener.hourNumberRadius * 0.03 * minuteHandWidthFactor,
       );
     }
     if(secondHandLengthFactor > 0.0 && secondHandWidthFactor > 0.0
         && secondHandColor != null && secondHandColor != Colors.transparent) {
-      double secondRadius = listener.markingRadius * secondHandLengthFactor;
-      if(secondRadius == 0) {
-        secondRadius = listener.dialRadius * 0.95 * secondHandLengthFactor;
-      }
       _drawSecondHand(
         canvas,
-        secondRadius,
-        listener.dialRadius * 0.01 * secondHandWidthFactor,
+        listener.markingRadius * secondHandLengthFactor,
+        listener.markingRadius * 0.01 * secondHandWidthFactor,
       );
     }
 

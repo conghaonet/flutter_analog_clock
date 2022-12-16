@@ -73,11 +73,12 @@ class DialPainter extends CustomPainter {
   }
 
   double _drawMarkings(final Canvas canvas, final double radius) {
+    final double markingRadius = radius * 0.95;
     if(markingColor == null || markingColor == Colors.transparent
         || markingRadiusFactor <= 0.0 || markingWidthFactor <= 0.0) {
+      listener.markingRadius = markingRadius;
       return radius;
     }
-    final double markingRadius = radius * 0.95;
     final double markingRadiusWithFactor = markingRadius * markingRadiusFactor;
     listener.markingRadius = markingRadiusWithFactor;
     double smallMarkingWidth = (radius - markingRadius) / 1.5 * markingWidthFactor;
@@ -88,7 +89,6 @@ class DialPainter extends CustomPainter {
     if(bigMarkingWidth/2 + markingRadius > radius) {
       bigMarkingWidth = (radius - markingRadius) * 2;
     }
-    listener.bigMarkingWidth = bigMarkingWidth;
 
     final List<Offset> smallMarkings = [];
     final List<Offset> bigMarkings = [];
@@ -121,7 +121,6 @@ class DialPainter extends CustomPainter {
 
   /// draw hour number (1 - 12)
   void _drawHourNumber(final Canvas canvas, final double radius) {
-    double maxHourNumberSide = 0;
     if(hourNumberColor == null || hourNumberColor == Colors.transparent
         || hourNumbers == null || hourNumbers!.isEmpty
         || hourNumberSizeFactor <= 0.0 || hourNumberRadiusFactor <= 0.0) {
@@ -139,8 +138,6 @@ class DialPainter extends CustomPainter {
           style: TextStyle(fontSize: fontSize, color: this.hourNumberColor),
         ),
       )..layout();
-      double maxSize = math.max(textPainter.height, textPainter.width);
-      if (maxSize > maxHourNumberSide) maxHourNumberSide = maxSize;
 
       double angle = i * 30.0;
       double hourNumberX = math.cos(AnalogClockUtil.getRadians(angle)) * radius;
@@ -150,7 +147,6 @@ class DialPainter extends CustomPainter {
       textPainter.paint(canvas, Offset(-textPainter.width/2, -textPainter.height/2));
       canvas.restore();
     }
-    listener.maxHourNumberSide = maxHourNumberSide;
   }
 
   @override
