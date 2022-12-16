@@ -15,7 +15,6 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   static const List<String> hourNumberTemplate1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   static const List<String> hourNumberTemplate2 = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
   static const List<String> hourNumberTemplate3 = ['', '', '3', '', '', '6', '', '', '9', '', '', '12'];
-
   Color? _dialColor = Colors.white;
   Color? _dialBorderColor = Colors.black;
   double? _dialBorderWidthFactor = 0.01;
@@ -58,6 +57,8 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
                 padding: const EdgeInsets.all(16.0),
                 child: AnalogClock(
                   key: _analogClockKey,
+                  dateTime: DateTime.now(),
+                  isKeepTime: true,
                   dialColor: _dialColor,
                   dialBorderColor: _dialBorderColor,
                   dialBorderWidthFactor: _dialBorderWidthFactor,
@@ -79,6 +80,13 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
                   secondHandLengthFactor: _secondHandLengthFactor,
                   centerPointColor: _centerPointColor,
                   centerPointWidthFactor: _centerPointWidthFactor,
+                  child: Align(
+                    alignment: const FractionalOffset(0.5, 0.75),
+                    child: ElevatedButton(
+                      onPressed: () => setState(() => _reset()),
+                      child: const Text('Reset'),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -96,7 +104,31 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
       ),
     );
   }
-
+  void _reset() {
+    _analogClockKey.currentState!.dateTime = DateTime.now();
+    _analogClockKey.currentState!.isKeepTime = true;
+    _dialColor = Colors.white;
+    _dialBorderColor = Colors.black;
+    _dialBorderWidthFactor = 0.01;
+    _markingColor = Colors.black;
+    _markingRadiusFactor = null;
+    _markingWidthFactor = null;
+    _hourNumbers = hourNumberTemplate1;
+    _hourNumberColor = Colors.black;
+    _hourNumberSizeFactor = null;
+    _hourNumberRadiusFactor = null;
+    _hourHandColor = Colors.black;
+    _minuteHandColor = Colors.black;
+    _secondHandColor = Colors.black;
+    _centerPointColor = Colors.black;
+    _hourHandWidthFactor = null;
+    _hourHandLengthFactor = null;
+    _minuteHandWidthFactor = null;
+    _minuteHandLengthFactor = null;
+    _secondHandWidthFactor = null;
+    _secondHandLengthFactor = null;
+    _centerPointWidthFactor = null;
+  }
   Widget _buildFooterButtons() {
     return Container(
       color: Colors.grey.shade300,
