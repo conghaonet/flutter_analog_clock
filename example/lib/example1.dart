@@ -1,9 +1,22 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
+
+void main() => runApp(const ExampleApp());
+
+class ExampleApp extends StatelessWidget {
+  const ExampleApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: AnalogClockDemo(),
+    );
+  }
+}
+
+
 class AnalogClockDemo extends StatefulWidget {
   const AnalogClockDemo({super.key});
 
