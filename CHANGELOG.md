@@ -14,7 +14,7 @@
 
 * bug fixes.
 
-## [0.2.1] - 2021-11-09
+## [0.2.1] - 2022-12-07
 * Support null safety.
 * Bug fixes.
 
