@@ -23,16 +23,32 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 ## Usage
 
 ### 1. Simple to use
+![dial01.webp](screenshots/screenshots01.jpg)
 ```dart
   const AnalogClock()
 ```
-or
+![dial02.webp](screenshots/screenshots02.jpg)
 ```dart
   const AnalogClock.dark()
 ```
 
+### 2. Use an image as a clock face
+![dial01.webp](screenshots/screenshots03.jpg)![dial02.webp](screenshots/screenshots04.jpg)
+```dart
+  Container(
+    decoration: const BoxDecoration(
+      image: DecorationImage(image: AssetImage('assets/dial01.webp')),
+    ),
+    child: const AnalogClock(
+      dialColor: null,
+      markingColor: null,
+      hourNumberColor: null,
+      secondHandColor: null,
+    ),
+  ),
+```
 
-### 2. Customize to use
+### 3. Customize to use
 ```dart
   AnalogClock(
     dateTime: DateTime.now(),
@@ -61,7 +77,7 @@ or
   )
 ```
 
-### 3. Specify a time
+### 4. Specify a time
 ```dart
 class ExampleSpecifyTime extends StatefulWidget {
   const ExampleSpecifyTime({Key? key}) : super(key: key);
@@ -102,18 +118,3 @@ class _ExampleSpecifyTimeState extends State<ExampleSpecifyTime> {
 }
 ```
 
-### 4. Use an image as a clock face
-![dial01.webp](screenshots/screenshots01.jpg)![dial02.webp](screenshots/screenshots02.jpg)
-```dart
-  Container(
-    decoration: const BoxDecoration(
-      image: DecorationImage(image: AssetImage('assets/dial01.webp')),
-    ),
-    child: const AnalogClock(
-      dialColor: null,
-      markingColor: null,
-      hourNumberColor: null,
-      secondHandColor: null,
-    ),
-  ),
-```
