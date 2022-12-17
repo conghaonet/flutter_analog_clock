@@ -32,7 +32,7 @@ class DialPainter extends CustomPainter {
     this.hourNumberColor,
     required this.hourNumberSizeFactor,
     required this.hourNumberRadiusFactor,
-  }) :  assert(hourNumbers == null || hourNumbers.length == 0 || hourNumbers.length == hourNumbersLength),
+  }) :  assert(hourNumbers == null || hourNumbers.length == 0 || hourNumbers.length == 12),
         assert(dialBorderWidthFactor >= 0.0 && dialBorderWidthFactor <= 1.0),
         super(repaint: listener);
 
