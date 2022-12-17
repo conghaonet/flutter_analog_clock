@@ -23,11 +23,10 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 ## Usage
 
 ### 1. Simple to use
-![dial01.webp](screenshots/screenshots01.jpg)
+![dial01.webp](screenshots/screenshots01.jpg)![dial02.webp](screenshots/screenshots02.jpg)
 ```dart
   const AnalogClock()
 ```
-![dial02.webp](screenshots/screenshots02.jpg)
 ```dart
   const AnalogClock.dark()
 ```
