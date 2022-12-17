@@ -101,3 +101,19 @@ class _ExampleSpecifyTimeState extends State<ExampleSpecifyTime> {
   }
 }
 ```
+
+### 4. Use an image as a clock face
+![dial01.webp](screenshots/screenshots01.jpg)![dial02.webp](screenshots/screenshots02.jpg)
+```dart
+  Container(
+    decoration: const BoxDecoration(
+      image: DecorationImage(image: AssetImage('assets/dial01.webp')),
+    ),
+    child: const AnalogClock(
+      dialColor: null,
+      markingColor: null,
+      hourNumberColor: null,
+      secondHandColor: null,
+    ),
+  ),
+```
