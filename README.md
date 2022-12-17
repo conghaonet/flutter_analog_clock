@@ -91,7 +91,7 @@ class _ExampleSpecifyTimeState extends State<ExampleSpecifyTime> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text('Analog clock'),
       ),
       body: AnalogClock(
         key: _analogClockKey,
