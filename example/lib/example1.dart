@@ -4,7 +4,9 @@ import 'dart:math' as math;
 
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
-void main() => runApp(const ExampleApp());
+void main() => runApp(const MaterialApp(
+  home: AnalogClockDemo(),
+));
 
 class ExampleApp extends StatelessWidget {
   const ExampleApp({super.key});
