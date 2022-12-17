@@ -12,7 +12,7 @@ This widget enables you to customize the clock's background, dial, markings, and
 In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
-  flutter_analog_clock: ^1.0.2
+  flutter_analog_clock: ^1.0.3
 ```
 In your library add the following import:
 ```dart
