@@ -3,23 +3,21 @@
 [![pub package](https://img.shields.io/pub/v/flutter_analog_clock.svg)](https://pub.dev/packages/flutter_analog_clock)
 
 A simple, highly customizable analog clock widget.
+This widget enables you to customize the clock's background, dial, markings, and hands.
+![](screenshots/flutter_analog_clock.git)
 
-<img src="https://i.ibb.co/C54DXLw/analog-clock.gif" alt="analog-clock" border="0">
-
-##Install
-
+## Install
 
 In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   flutter_analog_clock: ^1.0.1
 ```
-
 In your library add the following import:
-
 ```dart
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 ```
+
 ## Usage
 
 ### 1. Simple to use
@@ -47,7 +45,20 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
   ),
 ```
 
-### 3. Customize to use
+### 3. With a child
+![](screenshots/screenshots05.jpg)
+```dart
+  AnalogClock(
+    dateTime: DateTime(2022, 10, 24, 10, 12, 07),
+    isKeepTime: false,
+    child: const Align(
+      alignment: FractionalOffset(0.5, 0.75),
+      child: Text('GMT-8'),
+    ),
+  ),
+```
+
+### 4. Customize to use
 ```dart
   AnalogClock(
     dateTime: DateTime.now(),
@@ -76,7 +87,7 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
   )
 ```
 
-### 4. Specify a time
+### 5. Specify a time
 ```dart
 class ExampleSpecifyTime extends StatefulWidget {
   const ExampleSpecifyTime({Key? key}) : super(key: key);
@@ -116,4 +127,3 @@ class _ExampleSpecifyTimeState extends State<ExampleSpecifyTime> {
   }
 }
 ```
-
