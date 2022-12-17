@@ -23,7 +23,7 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 ## Usage
 
 ### 1. Simple to use
-![dial01.webp](screenshots/screenshots01.jpg)![dial02.webp](screenshots/screenshots02.jpg)
+![](screenshots/screenshots01.jpg)![](screenshots/screenshots02.jpg)
 ```dart
   const AnalogClock()
 ```
@@ -32,7 +32,7 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 ```
 
 ### 2. Use an image as a clock face
-![dial01.webp](screenshots/screenshots03.jpg)![dial02.webp](screenshots/screenshots04.jpg)
+![](screenshots/screenshots03.jpg)![](screenshots/screenshots04.jpg)
 ```dart
   Container(
     decoration: const BoxDecoration(
