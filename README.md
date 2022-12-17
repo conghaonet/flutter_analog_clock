@@ -4,7 +4,7 @@
 
 A simple, highly customizable analog clock widget.
 This widget enables you to customize the clock's background, dial, markings, and hands.
-![](screenshots/screenshot_v1.gif)![](screenshots/screenshot_v2.gif)
+![](screenshots/screenshot_v1.gif)        ![](screenshots/screenshot_v2.gif)
 
 ## Install
 
