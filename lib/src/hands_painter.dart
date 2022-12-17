@@ -44,8 +44,10 @@ class HandPainter extends CustomPainter {
     // translate to center of clock
     canvas.translate(size.width / 2, size.height / 2);
 
-    if(hourHandLengthFactor > 0.0 && hourHandWidthFactor > 0.0
-        && hourHandColor != null && hourHandColor != Colors.transparent) {
+    if (hourHandLengthFactor > 0.0 &&
+        hourHandWidthFactor > 0.0 &&
+        hourHandColor != null &&
+        hourHandColor != Colors.transparent) {
       double baseHourLength = listener.hourNumberRadius * 0.75;
       hourWidth = baseHourLength * 0.09 * hourHandWidthFactor;
       _drawHourHand(
@@ -54,8 +56,10 @@ class HandPainter extends CustomPainter {
         hourWidth,
       );
     }
-    if(minuteHandLengthFactor > 0.0 && minuteHandWidthFactor > 0.0
-        && minuteHandColor != null && minuteHandColor != Colors.transparent) {
+    if (minuteHandLengthFactor > 0.0 &&
+        minuteHandWidthFactor > 0.0 &&
+        minuteHandColor != null &&
+        minuteHandColor != Colors.transparent) {
       minuteWidth = listener.hourNumberRadius * 0.03 * minuteHandWidthFactor;
       _drawMinuteHand(
         canvas,
@@ -63,8 +67,10 @@ class HandPainter extends CustomPainter {
         minuteWidth,
       );
     }
-    if(secondHandLengthFactor > 0.0 && secondHandWidthFactor > 0.0
-        && secondHandColor != null && secondHandColor != Colors.transparent) {
+    if (secondHandLengthFactor > 0.0 &&
+        secondHandWidthFactor > 0.0 &&
+        secondHandColor != null &&
+        secondHandColor != Colors.transparent) {
       secondWidth = listener.markingRadius * 0.01 * secondHandWidthFactor;
       _drawSecondHand(
         canvas,
@@ -74,9 +80,14 @@ class HandPainter extends CustomPainter {
     }
 
     //draw center point
-    if(centerPointColor != null && centerPointColor != Colors.transparent && centerPointWidthFactor > 0.0) {
+    if (centerPointColor != null &&
+        centerPointColor != Colors.transparent &&
+        centerPointWidthFactor > 0.0) {
       Paint centerPointPaint = Paint()
-        ..strokeWidth = math.max(hourWidth, math.max(minuteWidth, secondWidth)) * 2.0 * centerPointWidthFactor
+        ..strokeWidth =
+            math.max(hourWidth, math.max(minuteWidth, secondWidth)) *
+                2.0 *
+                centerPointWidthFactor
         ..strokeCap = StrokeCap.round
         ..color = this.centerPointColor!;
       canvas.drawPoints(PointMode.points, [Offset.zero], centerPointPaint);
@@ -87,8 +98,7 @@ class HandPainter extends CustomPainter {
     double angle = dateTime.hour % 12 + dateTime.minute / 60.0 - 3;
     Offset handOffset = Offset(
         math.cos(AnalogClockUtil.getRadians(angle * 30)) * radius,
-        math.sin(AnalogClockUtil.getRadians(angle * 30)) * radius
-    );
+        math.sin(AnalogClockUtil.getRadians(angle * 30)) * radius);
     final hourHandPaint = Paint()
       ..isAntiAlias = true
       ..color = this.hourHandColor ?? Colors.transparent
@@ -101,8 +111,7 @@ class HandPainter extends CustomPainter {
     double angle = dateTime.minute - 15.0;
     Offset handOffset = Offset(
         math.cos(AnalogClockUtil.getRadians(angle * 6.0)) * radius,
-        math.sin(AnalogClockUtil.getRadians(angle * 6.0)) * radius
-    );
+        math.sin(AnalogClockUtil.getRadians(angle * 6.0)) * radius);
     final hourHandPaint = Paint()
       ..isAntiAlias = true
       ..color = this.minuteHandColor ?? Colors.transparent
@@ -115,8 +124,7 @@ class HandPainter extends CustomPainter {
     double angle = dateTime.second - 15.0;
     Offset handOffset = Offset(
         math.cos(AnalogClockUtil.getRadians(angle * 6.0)) * radius,
-        math.sin(AnalogClockUtil.getRadians(angle * 6.0)) * radius
-    );
+        math.sin(AnalogClockUtil.getRadians(angle * 6.0)) * radius);
     final hourHandPaint = Paint()
       ..isAntiAlias = true
       ..color = this.secondHandColor ?? Colors.transparent
@@ -126,17 +134,17 @@ class HandPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant HandPainter oldDelegate) {
-    return oldDelegate.dateTime != dateTime
-        || oldDelegate.hourHandColor != hourHandColor
-        || oldDelegate.minuteHandColor != minuteHandColor
-        || oldDelegate.secondHandColor != secondHandColor
-        || oldDelegate.centerPointColor != centerPointColor
-        || oldDelegate.hourHandWidthFactor != hourHandWidthFactor
-        || oldDelegate.minuteHandWidthFactor != minuteHandWidthFactor
-        || oldDelegate.secondHandWidthFactor != secondHandWidthFactor
-        || oldDelegate.hourHandLengthFactor != hourHandLengthFactor
-        || oldDelegate.minuteHandLengthFactor != minuteHandLengthFactor
-        || oldDelegate.secondHandLengthFactor != secondHandLengthFactor
-        || oldDelegate.centerPointWidthFactor != centerPointWidthFactor;
+    return oldDelegate.dateTime != dateTime ||
+        oldDelegate.hourHandColor != hourHandColor ||
+        oldDelegate.minuteHandColor != minuteHandColor ||
+        oldDelegate.secondHandColor != secondHandColor ||
+        oldDelegate.centerPointColor != centerPointColor ||
+        oldDelegate.hourHandWidthFactor != hourHandWidthFactor ||
+        oldDelegate.minuteHandWidthFactor != minuteHandWidthFactor ||
+        oldDelegate.secondHandWidthFactor != secondHandWidthFactor ||
+        oldDelegate.hourHandLengthFactor != hourHandLengthFactor ||
+        oldDelegate.minuteHandLengthFactor != minuteHandLengthFactor ||
+        oldDelegate.secondHandLengthFactor != secondHandLengthFactor ||
+        oldDelegate.centerPointWidthFactor != centerPointWidthFactor;
   }
 }

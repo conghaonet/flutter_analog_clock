@@ -6,11 +6,8 @@ class AnalogClockListener extends Listenable {
   double hourNumberRadius = 0.0;
 
   @override
-  void addListener(VoidCallback listener) {
-  }
+  void addListener(VoidCallback listener) {}
 
   @override
-  void removeListener(VoidCallback listener) {
-  }
-
+  void removeListener(VoidCallback listener) {}
 }

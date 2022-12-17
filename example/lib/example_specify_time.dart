@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
 void main() => runApp(const MaterialApp(
-  home: ExampleSpecifyTime(),
-));
+      home: ExampleSpecifyTime(),
+    ));
 
 class ExampleSpecifyTime extends StatefulWidget {
   const ExampleSpecifyTime({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _ExampleSpecifyTimeState extends State<ExampleSpecifyTime> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text('Specify a time'),
       ),
       body: AnalogClock(
         key: _analogClockKey,
