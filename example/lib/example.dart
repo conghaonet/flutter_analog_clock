@@ -8,16 +8,6 @@ void main() => runApp(const MaterialApp(
   home: AnalogClockDemo(),
 ));
 
-class ExampleApp extends StatelessWidget {
-  const ExampleApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: AnalogClockDemo(),
-    );
-  }
-}
-
 
 class AnalogClockDemo extends StatefulWidget {
   const AnalogClockDemo({super.key});
@@ -32,7 +22,7 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
   static const List<String> hourNumberTemplate3 = ['', '', '3', '', '', '6', '', '', '9', '', '', '12'];
   Color? _dialColor = Colors.white;
   Color? _dialBorderColor = Colors.black;
-  double? _dialBorderWidthFactor = 0.01;
+  double? _dialBorderWidthFactor = 0.1;
   Color? _markingColor = Colors.black;
   double? _markingRadiusFactor;
   double? _markingWidthFactor;
@@ -124,7 +114,7 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
     _analogClockKey.currentState!.isKeepTime = true;
     _dialColor = Colors.white;
     _dialBorderColor = Colors.black;
-    _dialBorderWidthFactor = 0.01;
+    _dialBorderWidthFactor = 0.1;
     _markingColor = Colors.black;
     _markingRadiusFactor = null;
     _markingWidthFactor = null;
@@ -532,7 +522,7 @@ class _AnalogClockDemoState extends State<AnalogClockDemo> {
             _dialBorderWidthFactor = value;
           } else {
             value = _dialBorderWidthFactor;
-            maxValue = 1.0;
+            maxValue = 0.5;
             defaultValue = 0.0;
           }
           break;

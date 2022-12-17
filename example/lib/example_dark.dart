@@ -6,8 +6,6 @@ void main() => runApp(MaterialApp(
     appBar: AppBar(
       title: const Text('FlutterAnalogClock'),
     ),
-    body: const Center(
-      child: AnalogClock.dark(),
-    ),
+    body: const AnalogClock(),
   ),
 ));
