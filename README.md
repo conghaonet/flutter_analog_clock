@@ -4,7 +4,7 @@
 
 A simple, highly customizable analog clock widget.
 This widget enables you to customize the clock's background, dial, markings, and hands.
-![](screenshots/flutter_analog_clock.gif)
+![](screenshots/screenshot_v1.gif)![](screenshots/screenshot_v2.gif)
 
 ## Install
 
@@ -21,7 +21,7 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 ## Usage
 
 ### 1. Simple to use
-![](screenshots/screenshots01.jpg)![](screenshots/screenshots02.jpg)
+![](screenshots/screenshot01.jpg)![](screenshots/screenshot02.jpg)
 ```dart
   const AnalogClock()
 ```
@@ -30,7 +30,7 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 ```
 
 ### 2. Use an image as a clock face
-![](screenshots/screenshots03.jpg)![](screenshots/screenshots04.jpg)
+![](screenshots/screenshot03.jpg)![](screenshots/screenshot04.jpg)
 ```dart
   Container(
     decoration: const BoxDecoration(
@@ -46,7 +46,7 @@ import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 ```
 
 ### 3. With a child
-![](screenshots/screenshots05.jpg)
+![](screenshots/screenshot05.jpg)
 ```dart
   AnalogClock(
     dateTime: DateTime(2022, 10, 24, 10, 12, 07),
@@ -127,3 +127,6 @@ class _ExampleSpecifyTimeState extends State<ExampleSpecifyTime> {
   }
 }
 ```
+
+You can find all custom options here:
+> https://github.com/conghaonet/flutter_analog_clock/blob/master/example/lib/example.dart

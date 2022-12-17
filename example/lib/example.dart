@@ -4,9 +4,21 @@ import 'dart:math' as math;
 
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
-void main() => runApp(const MaterialApp(
-      home: AnalogClockDemo(),
-    ));
+void main() => runApp(const ExampleApp());
+
+class ExampleApp extends StatelessWidget {
+  const ExampleApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
+      home: const AnalogClockDemo(),
+    );
+  }
+}
 
 class AnalogClockDemo extends StatefulWidget {
   const AnalogClockDemo({super.key});
