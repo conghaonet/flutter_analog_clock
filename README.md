@@ -95,7 +95,7 @@ class _ExampleSpecifyTimeState extends State<ExampleSpecifyTime> {
       ),
       body: AnalogClock(
         key: _analogClockKey,
-        dateTime: DateTime(2022, 10, 24, 8, 23, 45),
+        dateTime: DateTime(2022, 10, 24, 1, 23, 45),
         isKeepTime: false,
       ),
       persistentFooterButtons: [
