@@ -3,7 +3,7 @@ description: A simple, highly customizable analog clock widget.
   This widget enables you to customize the clock's background, dial, markings, and hands.
 repository: https://github.com/conghaonet/flutter_analog_clock
 issue_tracker: https://github.com/conghaonet/flutter_analog_clock/issues
-version: 1.0.2
+version: 1.0.3
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
