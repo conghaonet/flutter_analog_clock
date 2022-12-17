@@ -103,8 +103,7 @@ class _ExampleSpecifyTimeState extends State<ExampleSpecifyTime> {
 ```
 
 ### 4. Use an image as a clock face
-![dial01.webp](screenshots/screenshots01.jpg){width=120px}
-![dial02.webp](screenshots/screenshots02.jpg)
+![dial01.webp](screenshots/screenshots01.jpg)![dial02.webp](screenshots/screenshots02.jpg)
 ```dart
   Container(
     decoration: const BoxDecoration(
