@@ -1,3 +1,7 @@
+## [1.0.4] - 2022-12-27
+* Set the contour of the end of the hands to a semi-circular shape.
+* Bug fixes.
+
 ## [1.0.3] - 2022-12-17
 This is a completely rebuilt version that is incompatible with the 0.x version.
 * Improved performance with more efficient memory usage.
