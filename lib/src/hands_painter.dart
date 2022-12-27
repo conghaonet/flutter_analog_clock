@@ -102,7 +102,8 @@ class HandPainter extends CustomPainter {
     final hourHandPaint = Paint()
       ..isAntiAlias = true
       ..color = this.hourHandColor ?? Colors.transparent
-      ..strokeWidth = strokeWidth;
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round; //Round shape on the end of line.
     canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
   }
 
@@ -115,7 +116,8 @@ class HandPainter extends CustomPainter {
     final hourHandPaint = Paint()
       ..isAntiAlias = true
       ..color = this.minuteHandColor ?? Colors.transparent
-      ..strokeWidth = strokeWidth;
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round;
     canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
   }
 
@@ -128,7 +130,8 @@ class HandPainter extends CustomPainter {
     final hourHandPaint = Paint()
       ..isAntiAlias = true
       ..color = this.secondHandColor ?? Colors.transparent
-      ..strokeWidth = strokeWidth;
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round;
     canvas.drawLine(Offset.zero, handOffset, hourHandPaint);
   }
 
